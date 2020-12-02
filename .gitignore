@@ -1,0 +1,8 @@
+*.spec
+*_temp.py
+**/__pycache__/
+**/.vscode/
+**/.idea/
+**/env/
+**/venv/
+**/scripts/build/
