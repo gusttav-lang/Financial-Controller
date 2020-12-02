@@ -29,6 +29,8 @@ class Ui_MainWindow(object):
         self.actionSalvar.setObjectName(u"actionSalvar")
         self.actionFechar = QAction(MainWindow)
         self.actionFechar.setObjectName(u"actionFechar")
+        self.actionSobre = QAction(MainWindow)
+        self.actionSobre.setObjectName(u"actionSobre")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -50,6 +52,8 @@ class Ui_MainWindow(object):
         self.menubar.setGeometry(QRect(0, 0, 1140, 21))
         self.menuArquivo = QMenu(self.menubar)
         self.menuArquivo.setObjectName(u"menuArquivo")
+        self.menuSobre = QMenu(self.menubar)
+        self.menuSobre.setObjectName(u"menuSobre")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -71,10 +75,12 @@ class Ui_MainWindow(object):
         MainWindow.addDockWidget(Qt.LeftDockWidgetArea, self.dw_esquerdo)
 
         self.menubar.addAction(self.menuArquivo.menuAction())
+        self.menubar.addAction(self.menuSobre.menuAction())
         self.menuArquivo.addAction(self.actionNovo)
         self.menuArquivo.addAction(self.actionAbrir)
         self.menuArquivo.addAction(self.actionSalvar)
         self.menuArquivo.addAction(self.actionFechar)
+        self.menuSobre.addAction(self.actionSobre)
 
         self.retranslateUi(MainWindow)
 
@@ -111,6 +117,8 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(shortcut)
         self.actionFechar.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+F", None))
 #endif // QT_CONFIG(shortcut)
+        self.actionSobre.setText(QCoreApplication.translate("MainWindow", u"Sobre", None))
         self.menuArquivo.setTitle(QCoreApplication.translate("MainWindow", u"Arquivo", None))
+        self.menuSobre.setTitle(QCoreApplication.translate("MainWindow", u"Ajuda", None))
     # retranslateUi
 
