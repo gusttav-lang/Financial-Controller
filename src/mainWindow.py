@@ -7,7 +7,10 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)      
+        self.ui.setupUi(self)
+
+        # DAO:
+        self.__project = None
         
         self.load_interface()
         
@@ -15,7 +18,7 @@ class MainWindow(QMainWindow):
         self.setWindowState(Qt.WindowMaximized)
         self.ui.dw_esquerdo.setTitleBarWidget(QWidget()) # esconder a barra
         
-        #load tree items:
+        # load tree items:
         tree_item_contas = QTreeWidgetItem(self.ui.tw_esquerdo)
         tree_item_contas.setText(0, "Corretoras")
         
