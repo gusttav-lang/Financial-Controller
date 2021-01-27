@@ -1,5 +1,5 @@
 import datetime
-from src.dao.objective import  Objective
+from src.dao.objective import Objective
 from src.dao.broker import Broker
 
 

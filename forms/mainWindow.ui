@@ -65,12 +65,21 @@
        <attribute name="headerVisible">
         <bool>false</bool>
        </attribute>
+       <column>
+        <property name="text">
+         <string notr="true">1</string>
+        </property>
+       </column>
       </widget>
      </item>
     </layout>
    </widget>
   </widget>
   <action name="actionNovo">
+   <property name="icon">
+    <iconset resource="../assets/resources.qrc">
+     <normaloff>:/icons/icons/novo.png</normaloff>:/icons/icons/novo.png</iconset>
+   </property>
    <property name="text">
     <string>Novo</string>
    </property>
@@ -82,6 +91,10 @@
    </property>
   </action>
   <action name="actionAbrir">
+   <property name="icon">
+    <iconset resource="../assets/resources.qrc">
+     <normaloff>:/icons/icons/abrir.png</normaloff>:/icons/icons/abrir.png</iconset>
+   </property>
    <property name="text">
     <string>Abrir</string>
    </property>
@@ -93,6 +106,10 @@
    </property>
   </action>
   <action name="actionSalvar">
+   <property name="icon">
+    <iconset resource="../assets/resources.qrc">
+     <normaloff>:/icons/icons/salvar.png</normaloff>:/icons/icons/salvar.png</iconset>
+   </property>
    <property name="text">
     <string>Salvar</string>
    </property>
@@ -104,6 +121,10 @@
    </property>
   </action>
   <action name="actionFechar">
+   <property name="icon">
+    <iconset resource="../assets/resources.qrc">
+     <normaloff>:/icons/icons/fechar.png</normaloff>:/icons/icons/fechar.png</iconset>
+   </property>
    <property name="text">
     <string>Fechar</string>
    </property>
@@ -115,11 +136,17 @@
    </property>
   </action>
   <action name="actionSobre">
+   <property name="icon">
+    <iconset resource="../assets/resources.qrc">
+     <normaloff>:/icons/icons/about.png</normaloff>:/icons/icons/about.png</iconset>
+   </property>
    <property name="text">
     <string>Sobre</string>
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../assets/resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

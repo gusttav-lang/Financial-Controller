@@ -17,7 +17,7 @@ if __name__ == "__main__":
     myappid = 'pythonw' # arbitrary string
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
     scriptDir = os.path.dirname(os.path.realpath(__file__))
-    app.setWindowIcon(QIcon(scriptDir + os.path.sep + 'icons/logo.png'))    
+    app.setWindowIcon(QIcon(scriptDir + os.path.sep + 'assets/icons/logo.png'))    
     
     #Remove button "?" from dialogs:
     QApplication.setAttribute(Qt.AA_DisableWindowContextHelpButton) 

@@ -9,4 +9,4 @@ class Objective:
         self.name = "New objective"
         self.description = ""
         self.deadline = datetime.date.today()
-        self.finished_definition ""
+        self.finished_definition = ""
