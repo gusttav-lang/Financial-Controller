@@ -5,6 +5,7 @@ class Broker():
     def __init__(self):
         self.__name = "New broker"
         self.__bank_number = 0
+        self.__description = "Describe for what is used"
 
     @property
     def name(self):
@@ -20,4 +21,12 @@ class Broker():
     
     @bank_number.setter
     def bank_number(self, value):
-        __bank_number = value
+        self.__bank_number = value
+
+    @property
+    def description(self):
+        return self.__description
+    
+    @description.setter
+    def description(self, value):
+        self.__description = value
