@@ -1,4 +1,4 @@
-class Broker():
+class Broker:
     """
     Represents a broker or bank, where the assets are stored
     """
@@ -17,7 +17,7 @@ class Broker():
 
     @property
     def bank_number(self):
-        return __bank_number
+        return self.__bank_number
     
     @bank_number.setter
     def bank_number(self, value):
