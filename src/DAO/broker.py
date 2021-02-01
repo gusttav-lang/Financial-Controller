@@ -10,23 +10,23 @@ class Broker:
     @property
     def name(self):
         return self.__name
-    
-    @name.setter
-    def name(self, value):
-        self.__name = value
 
     @property
     def bank_number(self):
         return self.__bank_number
-    
-    @bank_number.setter
-    def bank_number(self, value):
-        self.__bank_number = value
 
     @property
     def description(self):
         return self.__description
-    
-    @description.setter
-    def description(self, value):
+      
+    def set_name(self, value):
+        self.__name = value
+
+    def set_description(self, value : str):
         self.__description = value
+
+    def set_bank_number(self, value : int):
+        try:
+            self.__bank_number = int(value)
+        except:
+            raise TypeError("Only Integers are allowed")

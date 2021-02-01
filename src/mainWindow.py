@@ -8,6 +8,7 @@ from src.dao.projectdao import ProjectDAO
 
 # Interfaces:
 from src.brokersEditor import BrokersEditor
+from src.objectivesEditor import ObjectivesEditor
 
 # Definition of strings:
 from src.globalvars import GlobalVars as gv
@@ -107,4 +108,7 @@ class MainWindow(QMainWindow):
                 self.ui.sw_central.addWidget(brokerEdt)
                 # self.ui.sw_central.setCurrentWidget(brokerEdt) 
                 # self.ui.sw_central.setCurrentIndex(0)
+            elif (item.text(0) == gv.objetivos):
+                objectivesEdt = ObjectivesEditor(self.__project.objectives)
+                self.ui.sw_central.addWidget(objectivesEdt)
                 
