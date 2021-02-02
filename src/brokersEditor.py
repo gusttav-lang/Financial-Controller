@@ -21,6 +21,10 @@ class BrokersEditor(QWidget):
         # check if can enable delete button
         self.enable_widgets()
 
+        if (self.ui.lw_brokers_list.count() > 0):
+            self.ui.lw_brokers_list.setCurrentRow(-1) # corrects a bug for when there is only 1 item in the list
+            self.ui.lw_brokers_list.setCurrentRow(0)
+
     def enable_widgets(self):
         if (self.ui.lw_brokers_list.count() == 0):
             self.ui.btn_delete.setEnabled(False)
@@ -43,20 +47,21 @@ class BrokersEditor(QWidget):
         self.ui.plainTextEdit_description.textChanged.connect(self.description_changed)
 
     def name_changed(self, new_text):
-        """Uptades de lw_brokers ListWidgetItem text"""
+        """Updates de lw_brokers ListWidgetItem text"""
         current_row = self.ui.lw_brokers_list.currentRow()
         if (current_row > -1 and current_row < self.ui.lw_brokers_list.count()):
             self.ui.lw_brokers_list.currentItem().setText(new_text)
 
     def description_changed(self):
-        # QPlainTextEdit does not have textChanged. We must do it:
+        # QPlainTextEdit does not have textChanged(text). We must do it:
         self.__brokers[self.ui.lw_brokers_list.currentRow()].set_description(self.ui.plainTextEdit_description.toPlainText())
     
     def add_list_widget_item(self, broker : Broker):
         item = QListWidgetItem()
         item.setText(broker.name)
         self.ui.lw_brokers_list.addItem(item)
-        self.enable_widgets()     
+        self.enable_widgets()        
+        self.ui.lw_brokers_list.setCurrentRow(self.ui.lw_brokers_list.count() - 1)
 
     def load_brokers(self):
         for broker in self.__brokers:

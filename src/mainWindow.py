@@ -9,6 +9,7 @@ from src.dao.projectdao import ProjectDAO
 # Interfaces:
 from src.brokersEditor import BrokersEditor
 from src.objectivesEditor import ObjectivesEditor
+from src.spentCategoryEditor import SpentCategoryEditor
 
 # Definition of strings:
 from src.globalvars import GlobalVars as gv
@@ -21,7 +22,7 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
 
         # UI Setup:
-        self.setWindowState(Qt.WindowMaximized)
+        #self.setWindowState(Qt.WindowMaximized)
         self.ui.dw_esquerdo.setTitleBarWidget(QWidget()) # esconder a barra
 
         # DAO:
@@ -106,9 +107,10 @@ class MainWindow(QMainWindow):
             if (item.text(0) == gv.corretoras):
                 brokerEdt = BrokersEditor(self.__project.brokers)
                 self.ui.sw_central.addWidget(brokerEdt)
-                # self.ui.sw_central.setCurrentWidget(brokerEdt) 
-                # self.ui.sw_central.setCurrentIndex(0)
             elif (item.text(0) == gv.objetivos):
                 objectivesEdt = ObjectivesEditor(self.__project.objectives)
                 self.ui.sw_central.addWidget(objectivesEdt)
+            elif (item.text(0) == gv.categorias):
+                spentCategoryEdt = SpentCategoryEditor(self.__project.spent_categories)
+                self.ui.sw_central.addWidget(spentCategoryEdt)
                 

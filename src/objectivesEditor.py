@@ -3,7 +3,6 @@ from src.ui.objectivesEditor_ui import Ui_objectivesEditor
 from PySide2.QtCore import Qt, QDate
 from src.dao.project import Project
 from src.dao.objective import Objective
-import datetime
 
 
 class ObjectivesEditor(QWidget):
@@ -21,6 +20,10 @@ class ObjectivesEditor(QWidget):
 
         # check if can enable delete button
         self.enable_widgets()
+
+        if (self.ui.lw_objectives_list.count() > 0):
+            self.ui.lw_objectives_list.setCurrentRow(-1) # corrects a bug for when there is only 1 item in the list
+            self.ui.lw_objectives_list.setCurrentRow(0)
 
     def enable_widgets(self):
         if (self.ui.lw_objectives_list.count() == 0):
@@ -43,7 +46,6 @@ class ObjectivesEditor(QWidget):
         self.ui.lineEdit_Name.textChanged.connect(self.name_changed)
         self.ui.lineEdit_Name.textChanged.connect(lambda x: self.__objectives[self.ui.lw_objectives_list.currentRow()].set_name(x))
         self.ui.lineEdit_finished_definition.textChanged.connect(lambda x: self.__objectives[self.ui.lw_objectives_list.currentRow()].set_finished_definition(x))
-        #self.ui.dateEdit_deadline.editingFinished.connect(lambda x: self.__objectives[self.ui.lw_objectives_list.currentRow()].set_finished_definition(datetime.date(x)))
         self.ui.dateEdit_deadline.editingFinished.connect(self.deadline_edited)
         self.ui.plainTextEdit_description.textChanged.connect(self.description_changed)
 
@@ -61,13 +63,14 @@ class ObjectivesEditor(QWidget):
         """Updates de lw_objectives ListWidgetItem text"""
         current_row = self.ui.lw_objectives_list.currentRow()
         if (current_row > -1 and current_row < self.ui.lw_objectives_list.count()):
-            self.__objectives[current_row].set_deadline(self.ui.dateEdit_deadline.date().toPython)
+            self.__objectives[current_row].set_deadline(self.ui.dateEdit_deadline.date().toPython())
     
     def add_list_widget_item(self, objective : Objective):
         item = QListWidgetItem()
         item.setText(objective.name)
         self.ui.lw_objectives_list.addItem(item)
-        self.enable_widgets()     
+        self.enable_widgets()
+        self.ui.lw_objectives_list.setCurrentRow(self.ui.lw_objectives_list.count() - 1)
 
     def load_objectives(self):
         for objective in self.__objectives:
@@ -95,6 +98,5 @@ class ObjectivesEditor(QWidget):
             year = self.__objectives[row].deadline.year
             month = self.__objectives[row].deadline.month
             day = self.__objectives[row].deadline.day
-            print(year)
             self.ui.dateEdit_deadline.setDate(QDate(year, month, day))
             self.ui.plainTextEdit_description.setPlainText(self.__objectives[row].description)
