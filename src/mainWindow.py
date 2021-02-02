@@ -45,11 +45,12 @@ class MainWindow(QMainWindow):
 
     def open_project(self):
         # TODO: adicionar msg para quando ja existir projeto aberto
+        self.__project = Project()
+        file_path, _ = QFileDialog.getOpenFileName(self, 'Select File', '', 'Financial Controller Project (*.fcp)')
         if not ProjectDAO.load_project(file_path, self.__project):
             QMessageBox.critical(self, "Erro", "Arquivo corrompido ou inválido", QMessageBox.Ok)
-        
+            return
         self.load_interface()
-        self.make_connects()
 
     def save_project(self):
         if isinstance(self.__project, Project):
@@ -65,6 +66,10 @@ class MainWindow(QMainWindow):
 
     def close_project(self):
         self.__project = None
+        while (self.ui.tw_esquerdo.topLevelItemCount() > 0):
+            self.ui.tw_esquerdo.takeTopLevelItem(0)
+        while (self.ui.sw_central.count() > 0):
+            self.ui.sw_central.removeWidget(self.ui.sw_central.widget(0))
 
     def about_software(self):
         pass # create new dialog
