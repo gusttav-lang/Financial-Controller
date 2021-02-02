@@ -11,6 +11,7 @@ from src.brokersEditor import BrokersEditor
 from src.objectivesEditor import ObjectivesEditor
 from src.spentCategoryEditor import SpentCategoryEditor
 from src.assetsEditor import AssetsEditor
+from src.liabilitiesEditor import LiabilitiesEditor
 
 # Definition of strings:
 from src.globalvars import GlobalVars as gv
@@ -117,3 +118,6 @@ class MainWindow(QMainWindow):
             elif (item.text(0) == gv.ativos):
                 assetEdt = AssetsEditor(self.__project.assets, self.__project.brokers, self.__project.objectives)
                 self.ui.sw_central.addWidget(assetEdt)
+            elif (item.text(0) == gv.passivos):
+                liabilityEdt = LiabilitiesEditor(self.__project.liabilities, self.__project.brokers)
+                self.ui.sw_central.addWidget(liabilityEdt)
