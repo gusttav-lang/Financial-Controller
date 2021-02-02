@@ -10,6 +10,7 @@ from src.dao.projectdao import ProjectDAO
 from src.brokersEditor import BrokersEditor
 from src.objectivesEditor import ObjectivesEditor
 from src.spentCategoryEditor import SpentCategoryEditor
+from src.assetsEditor import AssetsEditor
 
 # Definition of strings:
 from src.globalvars import GlobalVars as gv
@@ -71,15 +72,15 @@ class MainWindow(QMainWindow):
         # load tree items:
         tree_item_contas = QTreeWidgetItem(self.ui.tw_esquerdo)
         tree_item_contas.setText(0, gv.corretoras)
+                
+        tree_item_objetivos = QTreeWidgetItem(self.ui.tw_esquerdo)
+        tree_item_objetivos.setText(0, gv.objetivos)
         
         tree_item_ativos = QTreeWidgetItem(self.ui.tw_esquerdo)
         tree_item_ativos.setText(0, gv.ativos)
         
         tree_item_passivos = QTreeWidgetItem(self.ui.tw_esquerdo)
         tree_item_passivos.setText(0, gv.passivos)
-                
-        tree_item_objetivos = QTreeWidgetItem(self.ui.tw_esquerdo)
-        tree_item_objetivos.setText(0, gv.objetivos)
         
         tree_item_gastos_fixos = QTreeWidgetItem(self.ui.tw_esquerdo)
         tree_item_gastos_fixos.setText(0, gv.gastos_fixos)
@@ -113,4 +114,6 @@ class MainWindow(QMainWindow):
             elif (item.text(0) == gv.categorias):
                 spentCategoryEdt = SpentCategoryEditor(self.__project.spent_categories)
                 self.ui.sw_central.addWidget(spentCategoryEdt)
-                
+            elif (item.text(0) == gv.ativos):
+                assetEdt = AssetsEditor(self.__project.assets, self.__project.brokers, self.__project.objectives)
+                self.ui.sw_central.addWidget(assetEdt)

@@ -60,7 +60,6 @@ class ObjectivesEditor(QWidget):
         self.__objectives[self.ui.lw_objectives_list.currentRow()].set_description(self.ui.plainTextEdit_description.toPlainText())
 
     def deadline_edited(self):
-        """Updates de lw_objectives ListWidgetItem text"""
         current_row = self.ui.lw_objectives_list.currentRow()
         if (current_row > -1 and current_row < self.ui.lw_objectives_list.count()):
             self.__objectives[current_row].set_deadline(self.ui.dateEdit_deadline.date().toPython())
