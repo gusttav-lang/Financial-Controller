@@ -12,6 +12,7 @@ from src.objectivesEditor import ObjectivesEditor
 from src.spentCategoryEditor import SpentCategoryEditor
 from src.assetsEditor import AssetsEditor
 from src.liabilitiesEditor import LiabilitiesEditor
+from src.spentLimitGoalEditor import SpentLimitGoalEditor
 
 # Definition of strings:
 from src.globalvars import GlobalVars as gv
@@ -88,18 +89,20 @@ class MainWindow(QMainWindow):
         tree_item_passivos = QTreeWidgetItem(self.ui.tw_esquerdo)
         tree_item_passivos.setText(0, gv.passivos)
         
-        tree_item_gastos_fixos = QTreeWidgetItem(self.ui.tw_esquerdo)
-        tree_item_gastos_fixos.setText(0, gv.gastos_fixos)
+        #tree_item_gastos_fixos = QTreeWidgetItem(self.ui.tw_esquerdo)
+        #tree_item_gastos_fixos.setText(0, gv.gastos_fixos)
         
-        tree_item_previsao_receitas = QTreeWidgetItem(self.ui.tw_esquerdo)
-        tree_item_previsao_receitas.setText(0, gv.previsao_receitas)
+        #tree_item_previsao_receitas = QTreeWidgetItem(self.ui.tw_esquerdo)
+        #tree_item_previsao_receitas.setText(0, gv.previsao_receitas)
         
-        tree_item_teto_gastos = QTreeWidgetItem(self.ui.tw_esquerdo)
-        tree_item_teto_gastos.setText(0, gv.teto_gastos)
-        
-        #TODO: colocar isso em outro lugar
         tree_item_categorias = QTreeWidgetItem(self.ui.tw_esquerdo)
         tree_item_categorias.setText(0, gv.categorias)
+
+        tree_item_teto_gastos = QTreeWidgetItem(self.ui.tw_esquerdo)
+        tree_item_teto_gastos.setText(0, gv.teto_gastos)
+                
+        tree_item_ideal = QTreeWidgetItem(self.ui.tw_esquerdo)
+        tree_item_ideal.setText(0, gv.alocacao_ideal)
         
         tree_item_gastos = QTreeWidgetItem(self.ui.tw_esquerdo)
         tree_item_gastos.setText(0, gv.gastos)
@@ -126,3 +129,6 @@ class MainWindow(QMainWindow):
             elif (item.text(0) == gv.passivos):
                 liabilityEdt = LiabilitiesEditor(self.__project.liabilities, self.__project.brokers)
                 self.ui.sw_central.addWidget(liabilityEdt)
+            elif (item.text(0) == gv.teto_gastos):
+                spentLimitEdt = SpentLimitGoalEditor(self.__project.standard_spent_limit, self.__project.spent_categories)
+                self.ui.sw_central.addWidget(spentLimitEdt)

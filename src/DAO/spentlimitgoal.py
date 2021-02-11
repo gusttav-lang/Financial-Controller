@@ -8,5 +8,16 @@ class SpentLimitGoal:
     beginning of the month
     """
     def __init__(self):
-        self.caterogy = SpentCategory()
-        self.amount = 0.0
+        self._category = SpentCategory()
+        self._amount = 0.0
+
+    def set_category(self, value : SpentCategory) : self._category = value
+    def set_amount(self, value : float) : self._amount = value
+
+    @property
+    def category(self):
+        return self._category
+
+    @property
+    def amount(self):
+        return self._amount

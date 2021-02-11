@@ -12,3 +12,4 @@ class GlobalVars:
     teto_gastos = "Teto de gastos"
     categorias = "Categorias"
     gastos = "Gastos"
+    alocacao_ideal = "Alocação ideal de ativos"
