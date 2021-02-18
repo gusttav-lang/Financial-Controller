@@ -23,8 +23,7 @@ class SpentLimitGoalEditor(QWidget):
         self.make_connects()
 
     def make_connects(self):
-        #self.ui.lw_spent_categories_list.currentRowChanged.connect(self.row_changed)
-        pass
+        self.ui.tableWidget.cellChanged.connect(self.cell_changed)
 
     def check_new_categories(self):
         #first, check if any category was excluded:
@@ -52,12 +51,12 @@ class SpentLimitGoalEditor(QWidget):
             #create and insert QTableWidgetItems
             twi_category = QTableWidgetItem()
             twi_category.setData(Qt.DisplayRole, spent_limit.category.name)
-            self.ui.tableWidget.setItem(initial_row_count, 0, twi_category) #verificar se ta na linha certa
+            twi_category.setFlags(Qt.ItemIsEnabled) # Disable for edition
+            self.ui.tableWidget.setItem(initial_row_count, 0, twi_category)
             twi_amount = QTableWidgetItem()
             twi_amount.setData(Qt.DisplayRole, spent_limit.amount)
-            self.ui.tableWidget.setItem(initial_row_count, 1, twi_amount) #verificar se ta na linha certa
+            self.ui.tableWidget.setItem(initial_row_count, 1, twi_amount)
     
-    def row_changed(self, row : int):        
-        if (row > -1 and row < self.ui.lw_spent_categories_list.count()):
-            self.ui.lineEdit_Name.setText(self.__spent_categories[row].name)
-            self.ui.plainTextEdit_description.setPlainText(self.__spent_categories[row].description)
+    def cell_changed(self, row : int, column : int):
+        if (column == 1):
+            self.__standard_spent_limit[row].set_amount(float(self.ui.tableWidget.item(row, column).data(Qt.DisplayRole)))
