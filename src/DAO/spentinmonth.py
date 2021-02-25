@@ -10,7 +10,7 @@ class SpentInMonth:
     """
     def __init__(self):
         self.month = 1
-        self.year = 2021
+        self.year = 2000
         self.spent_list = [] # Spent
         self.spent_limit_goal = [] # SpentLimitGoal
         self.fixed_spent = [] # FixedSpent

@@ -1,5 +1,5 @@
 from PySide2.QtWidgets import QWidget, QTableWidgetItem
-from src.ui.spentinmontheditor_ui import Ui_spentInMonthEditor
+from src.ui.spentInMonthEditor_ui import Ui_spentInMonthEditor
 from PySide2.QtCore import Qt
 from src.dao.project import Project
 from src.dao.spentcategory import SpentCategory

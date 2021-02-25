@@ -1,10 +1,11 @@
-from PySide2.QtWidgets import QMainWindow, QWidget, QTreeWidgetItem, QFileDialog, QMessageBox
+from PySide2.QtWidgets import QMainWindow, QWidget, QTreeWidgetItem, QFileDialog, QMessageBox, QMenu, QAction
 from src.ui.mainWindow_ui import Ui_MainWindow
-from PySide2.QtCore import Qt
+from PySide2.QtCore import Qt, QModelIndex
 
 # DAO:
 from src.dao.project import Project
 from src.dao.projectdao import ProjectDAO
+from src.dao.spentinmonth import SpentInMonth
 
 # Interfaces:
 from src.brokersEditor import BrokersEditor
@@ -13,6 +14,8 @@ from src.spentCategoryEditor import SpentCategoryEditor
 from src.assetsEditor import AssetsEditor
 from src.liabilitiesEditor import LiabilitiesEditor
 from src.spentLimitGoalEditor import SpentLimitGoalEditor
+from src.spentInMonthEditor import SpentInMonthEditor
+from src.addSpentMonth import AddSpentMonth
 
 # Definition of strings:
 from src.globalvars import GlobalVars as gv
@@ -27,6 +30,11 @@ class MainWindow(QMainWindow):
         # UI Setup:
         #self.setWindowState(Qt.WindowMaximized)
         self.ui.dw_esquerdo.setTitleBarWidget(QWidget()) # esconder a barra
+
+        #Internal vars:
+        self.menu_add_delete_father = None
+        self.act_new_spent = None
+        self.act_delete_spent = None
 
         # DAO:
         self.__project = None
@@ -108,6 +116,57 @@ class MainWindow(QMainWindow):
         tree_item_gastos.setText(0, gv.gastos)
 
         self.ui.tw_esquerdo.itemClicked.connect(self.tree_item_clicked)
+
+        #menus creation:
+        self.menu_add_delete_father = QMenu(self.ui.tw_esquerdo) # used to group new and delete
+        self.act_new_spent = QAction("Adicionar novo mês")
+        self.act_delete_spent = QAction("Deletar mês")
+        self.act_new_spent.triggered.connect(self.new_spent_month)
+        self.act_delete_spent.triggered.connect(self.delete_spent_month)
+        self.menu_add_delete_father.addAction(self.act_new_spent)
+        self.menu_add_delete_father.addAction(self.act_delete_spent)
+        self.ui.tw_esquerdo.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.ui.tw_esquerdo.customContextMenuRequested.connect(self.menu_tw_esquerdo)
+
+    def menu_tw_esquerdo(self, pos):
+        model_index = self.ui.tw_esquerdo.indexAt(pos) # QModelIndex()
+        if (model_index.isValid()):
+            if(self.ui.tw_esquerdo.currentItem().text(0) == gv.gastos):
+                self.act_delete_spent.setEnabled(False)
+                self.act_new_spent.setEnabled(True)
+                self.menu_add_delete_father.popup(self.ui.tw_esquerdo.viewport().mapToGlobal(pos))
+            if(self.ui.tw_esquerdo.currentItem().parent() != None):
+                if(self.ui.tw_esquerdo.currentItem().parent().text(0) == gv.gastos):
+                    self.act_delete_spent.setEnabled(True)
+                    self.act_new_spent.setEnabled(True)
+                    self.menu_add_delete_father.popup(self.ui.tw_esquerdo.viewport().mapToGlobal(pos))
+        
+    
+    def new_spent_month(self):
+        add_interface = AddSpentMonth(self.__project.spent_in_month)
+        add_interface.exec()
+
+        if add_interface.confirmed:
+            # create object:
+            new_spent = SpentInMonth()
+            self.__project.spent_in_month.append(new_spent)
+            new_spent.year = add_interface.selected_year
+            new_spent.month = add_interface.selected_month
+
+            # create QTreeWidgetItem:
+            tree_item_gastos_list = self.ui.tw_esquerdo.findItems(gv.gastos, Qt.MatchExactly, 0) # get a list of QTreeWidgetItem
+            tree_item_year_list = self.ui.tw_esquerdo.findItems(str(add_interface.selected_year), Qt.MatchExactly | Qt.MatchRecursive, 1) # parei aqui, nao ta funcionando
+            if (len(tree_item_year_list) == 0):
+                new_year_item = QTreeWidgetItem(tree_item_gastos_list[0])
+                new_year_item.setText(0, str(add_interface.selected_year))
+                tree_item_year_list.append(new_year_item)
+            tree_item_new_month = QTreeWidgetItem(tree_item_year_list[0])
+            tree_item_new_month.setText(0, str(add_interface.selected_month))
+            self.ui.tw_esquerdo.expandAll()
+
+    def delete_spent_month(self):
+        #remove da lista e apaga treewidgetitem
+        pass
         
     def tree_item_clicked(self, item):
         if isinstance(item, QTreeWidgetItem):
@@ -132,3 +191,6 @@ class MainWindow(QMainWindow):
             elif (item.text(0) == gv.teto_gastos):
                 spentLimitEdt = SpentLimitGoalEditor(self.__project.standard_spent_limit, self.__project.spent_categories)
                 self.ui.sw_central.addWidget(spentLimitEdt)
+            elif (item.text(0) == gv.gastos):
+                #spentEdt = SpentInMonthEditor() adicionar alguma tela generica que permita adicionar um mês novo e que tenha resumo do que já está cadastrado
+                pass
