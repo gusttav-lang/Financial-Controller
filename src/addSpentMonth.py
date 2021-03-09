@@ -51,6 +51,6 @@ class AddSpentMonth(QDialog):
     def month_already_exists(self):
         """Check if the month already exists in spent_in_month_list"""
         for i in self.__spent_in_month_list:
-            if (i.year == self.ui.comboBox_year.currentIndex()+1 and i.month == self.ui.comboBox_month.currentIndex() + 1):
+            if (i.year == self.selected_year and i.month == self.selected_month):
                 return True
         return False

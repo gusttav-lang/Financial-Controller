@@ -155,14 +155,20 @@ class MainWindow(QMainWindow):
 
             # create QTreeWidgetItem:
             tree_item_gastos_list = self.ui.tw_esquerdo.findItems(gv.gastos, Qt.MatchExactly, 0) # get a list of QTreeWidgetItem
-            tree_item_year_list = self.ui.tw_esquerdo.findItems(str(add_interface.selected_year), Qt.MatchExactly | Qt.MatchRecursive, 1) # parei aqui, nao ta funcionando
+            tree_item_year_list = self.ui.tw_esquerdo.findItems(str(add_interface.selected_year), Qt.MatchExactly | Qt.MatchRecursive, 0) # parei aqui, nao ta funcionando
             if (len(tree_item_year_list) == 0):
                 new_year_item = QTreeWidgetItem(tree_item_gastos_list[0])
                 new_year_item.setText(0, str(add_interface.selected_year))
                 tree_item_year_list.append(new_year_item)
             tree_item_new_month = QTreeWidgetItem(tree_item_year_list[0])
-            tree_item_new_month.setText(0, str(add_interface.selected_month))
+            #tree_item_new_month.setText(0, str(add_interface.selected_month))
+            tree_item_new_month.setText(0, gv.Meses[add_interface.selected_month])
+            self.update_tree_months_in_year()
             self.ui.tw_esquerdo.expandAll()
+
+    def update_tree_months_in_year(self):
+        #sort in the months in ascendend order
+        pass
 
     def delete_spent_month(self):
         #remove da lista e apaga treewidgetitem
