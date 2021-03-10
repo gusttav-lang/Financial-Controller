@@ -1,6 +1,7 @@
 from PySide2.QtWidgets import QMainWindow, QWidget, QTreeWidgetItem, QFileDialog, QMessageBox, QMenu, QAction, QTreeWidgetItemIterator
 from src.ui.mainWindow_ui import Ui_MainWindow
 from PySide2.QtCore import Qt, QModelIndex
+from src.tools.TreeWidgetItemMonthYear import TreeWidgetItemMonthYear
 
 # DAO:
 from src.dao.project import Project
@@ -158,11 +159,10 @@ class MainWindow(QMainWindow):
             tree_item_year_list = self.ui.tw_esquerdo.findItems(str(add_interface.selected_year), Qt.MatchExactly | Qt.MatchRecursive, 0) # parei aqui, nao ta funcionando
             if (len(tree_item_year_list) == 0):
                 new_year_item = QTreeWidgetItem(tree_item_gastos_list[0])
-                new_year_item.setText(0, str(add_interface.selected_year))
+                new_year_item.setText(0, str(new_spent.year))
                 tree_item_year_list.append(new_year_item)
-            tree_item_new_month = QTreeWidgetItem(tree_item_year_list[0])
-            #tree_item_new_month.setText(0, str(add_interface.selected_month))
-            tree_item_new_month.setText(0, gv.Meses[add_interface.selected_month])
+            tree_item_new_month = TreeWidgetItemMonthYear(tree_item_year_list[0], new_spent)
+            tree_item_new_month.setText(0, gv.Meses[new_spent.month])
             self.sort_tree_months_and_years()
             self.ui.tw_esquerdo.expandAll()
 
@@ -230,5 +230,10 @@ class MainWindow(QMainWindow):
                 spentLimitEdt = SpentLimitGoalEditor(self.__project.standard_spent_limit, self.__project.spent_categories)
                 self.ui.sw_central.addWidget(spentLimitEdt)
             elif (item.text(0) == gv.gastos):
-                #spentEdt = SpentInMonthEditor() adicionar alguma tela generica que permita adicionar um mês novo e que tenha resumo do que já está cadastrado
+                # adicionar alguma tela generica que permita adicionar um mês novo e que tenha resumo do que já está cadastrado
                 pass
+            elif (isinstance(item, TreeWidgetItemMonthYear)):
+                spentEdt = SpentInMonthEditor(item.spent_in_month, self.__project.spent_categories)
+                self.ui.sw_central.addWidget(spentEdt)
+
+#TODO: da pra criar um TreeWidgetItemYear para quando clica no ano. Assim da pra apresentar um resumo de despesas e receitar até o momento, bem como previsões (igual meu drive)
