@@ -36,7 +36,7 @@ class AddSpentMonth(QDialog):
         self.ui.comboBox_month.currentIndexChanged.connect(self.comboBox_month_changed)
 
     def comboBox_year_changed(self, index: int):
-        self.selected_year = self.initial_combobox_year + index + 1
+        self.selected_year = self.initial_combobox_year + index
 
     def comboBox_month_changed(self, index : int):
         self.selected_month = index + 1

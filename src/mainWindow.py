@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QMainWindow, QWidget, QTreeWidgetItem, QFileDialog, QMessageBox, QMenu, QAction
+from PySide2.QtWidgets import QMainWindow, QWidget, QTreeWidgetItem, QFileDialog, QMessageBox, QMenu, QAction, QTreeWidgetItemIterator
 from src.ui.mainWindow_ui import Ui_MainWindow
 from PySide2.QtCore import Qt, QModelIndex
 
@@ -163,12 +163,44 @@ class MainWindow(QMainWindow):
             tree_item_new_month = QTreeWidgetItem(tree_item_year_list[0])
             #tree_item_new_month.setText(0, str(add_interface.selected_month))
             tree_item_new_month.setText(0, gv.Meses[add_interface.selected_month])
-            self.update_tree_months_in_year()
+            self.sort_tree_months_and_years()
             self.ui.tw_esquerdo.expandAll()
 
-    def update_tree_months_in_year(self):
-        #sort in the months in ascendend order
-        pass
+    def sort_tree_months_and_years(self):
+        #sort the months in ascendend order in the year and sort the years in ascendend order
+        tree_item_gastos_list = self.ui.tw_esquerdo.findItems(gv.gastos, Qt.MatchExactly, 0) # get a list of QTreeWidgetItem
+        tree_item_gastos_list[0].sortChildren(0, Qt.AscendingOrder)
+
+        # step 1: convert months to int:
+        it1 = QTreeWidgetItemIterator(tree_item_gastos_list[0])
+        it1 += 1 # start after 'gastos'
+        while(it1.value()):
+            try:                
+                int(it1.value().text(0))
+            except ValueError:
+                it1.value().setText(0, gv.Meses_Sort_toLetter[it1.value().text(0)])                
+            it1 += 1
+
+        # step 2: sort months:
+        it2 = QTreeWidgetItemIterator(tree_item_gastos_list[0])
+        it2 += 1 # start after 'gastos'
+        while(it2.value()):
+            try:                
+                int(it2.value().text(0))
+                it2.value().sortChildren(0, Qt.AscendingOrder)                  
+            except ValueError:
+                pass # do nothing         
+            it2 += 1
+
+        # step 3: convert months bach to str:
+        it3 = QTreeWidgetItemIterator(tree_item_gastos_list[0])
+        it3 += 1 # start after 'gastos'
+        while(it3.value()):
+            try:                
+                int(it3.value().text(0))
+            except ValueError:
+                it3.value().setText(0, gv.Meses_Sort_toMonth[it3.value().text(0)])
+            it3 += 1
 
     def delete_spent_month(self):
         #remove da lista e apaga treewidgetitem

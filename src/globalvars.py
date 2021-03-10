@@ -28,3 +28,33 @@ class GlobalVars:
         11: "Novembro",
         12: "Dezembro",
     }
+
+    Meses_Sort_toLetter = {
+        "Janeiro": "a",
+        "Fevereiro": "b",
+        "Março": "c",
+        "Abril": "d",
+        "Maio": "e",
+        "Junho": "f",
+        "Julho": "g",
+        "Agosto": "h",
+        "Setembro": "i",
+        "Outubro": "j",
+        "Novembro": "k",
+        "Dezembro": "l",
+    }
+
+    Meses_Sort_toMonth = {
+        "a": "Janeiro",
+        "b": "Fevereiro",
+        "c": "Março",
+        "d": "Abril",
+        "e": "Maio",
+        "f": "Junho",
+        "g": "Julho",
+        "h": "Agosto",
+        "i": "Setembro",
+        "j": "Outubro",
+        "k": "Novembro",
+        "l": "Dezembro", 
+    }
