@@ -7,4 +7,11 @@ class FixedSpent(RecurringValues):
     Represents the spent which occur every month, e.g., electricity bill
     """
     def __init__(self):
-        self.category = SpentCategory()
+        super().__init__()
+        self._category = SpentCategory()
+
+    def set_category(self, value : SpentCategory) : self._category = value
+    
+    @property
+    def category(self):
+        return self._category
