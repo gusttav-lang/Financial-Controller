@@ -97,7 +97,7 @@
        <widget class="QTableWidget" name="tableWidget_spent">
         <column>
          <property name="text">
-          <string>O que</string>
+          <string>Dia</string>
          </property>
         </column>
         <column>
@@ -107,7 +107,7 @@
         </column>
         <column>
          <property name="text">
-          <string>Dia</string>
+          <string>Onde</string>
          </property>
         </column>
         <column>

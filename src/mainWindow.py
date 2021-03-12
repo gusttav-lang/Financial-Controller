@@ -233,7 +233,7 @@ class MainWindow(QMainWindow):
                 # adicionar alguma tela generica que permita adicionar um mês novo e que tenha resumo do que já está cadastrado
                 pass
             elif (isinstance(item, TreeWidgetItemMonthYear)):
-                spentEdt = SpentInMonthEditor(item.spent_in_month, self.__project.spent_categories)
+                spentEdt = SpentInMonthEditor(item.spent_in_month, self.__project.spent_categories, self.__project.standard_spent_limit)
                 self.ui.sw_central.addWidget(spentEdt)
 
 #TODO: da pra criar um TreeWidgetItemYear para quando clica no ano. Assim da pra apresentar um resumo de despesas e receitar até o momento, bem como previsões (igual meu drive)

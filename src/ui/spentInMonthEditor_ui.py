@@ -160,11 +160,11 @@ class Ui_spentInMonthEditor(object):
         ___qtablewidgetitem6.setText(QCoreApplication.translate("spentInMonthEditor", u"Dia", None));
         self.groupBox_3.setTitle(QCoreApplication.translate("spentInMonthEditor", u"Gatos", None))
         ___qtablewidgetitem7 = self.tableWidget_spent.horizontalHeaderItem(0)
-        ___qtablewidgetitem7.setText(QCoreApplication.translate("spentInMonthEditor", u"O que", None));
+        ___qtablewidgetitem7.setText(QCoreApplication.translate("spentInMonthEditor", u"Dia", None));
         ___qtablewidgetitem8 = self.tableWidget_spent.horizontalHeaderItem(1)
         ___qtablewidgetitem8.setText(QCoreApplication.translate("spentInMonthEditor", u"Quanto", None));
         ___qtablewidgetitem9 = self.tableWidget_spent.horizontalHeaderItem(2)
-        ___qtablewidgetitem9.setText(QCoreApplication.translate("spentInMonthEditor", u"Dia", None));
+        ___qtablewidgetitem9.setText(QCoreApplication.translate("spentInMonthEditor", u"Onde", None));
         ___qtablewidgetitem10 = self.tableWidget_spent.horizontalHeaderItem(3)
         ___qtablewidgetitem10.setText(QCoreApplication.translate("spentInMonthEditor", u"Categoria", None));
         self.groupBox_4.setTitle(QCoreApplication.translate("spentInMonthEditor", u"Valorem em conta", None))

@@ -16,3 +16,12 @@ class SpentCategory:
     @property
     def description(self):
         return self._description
+
+    @staticmethod
+    def get_category_by_name(name: str, clist):
+        '''Used to return the SpentCategory object in clist by name'''
+        for category in clist:
+            if (name == category.name):
+                return category
+        return None
+

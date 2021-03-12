@@ -8,7 +8,7 @@ class FixedSpent(RecurringValues):
     """
     def __init__(self):
         super().__init__()
-        self._category = SpentCategory()
+        self._category = None # SpentCategory
 
     def set_category(self, value : SpentCategory) : self._category = value
     
