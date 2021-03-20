@@ -19,3 +19,4 @@ class Project:
         self.spent_categories = [] # SpentCategory
         self.spent_in_month = [] # SpentInMonth
         self.standard_spent_limit = [] # SpentLimitGoal
+        self.asset_categories = [] # AssetCategory

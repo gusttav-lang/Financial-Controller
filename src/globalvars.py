@@ -10,7 +10,8 @@ class GlobalVars:
     gastos_fixos = "Gastos fixos"
     previsao_receitas =  "Previsão de receitas"
     teto_gastos = "Teto de gastos"
-    categorias = "Categorias"
+    categorias_gastos = "Categorias de gastos"
+    categorias_ativos = "Categorias de ativos"
     gastos = "Gastos"
     alocacao_ideal = "Alocação ideal de ativos"
 

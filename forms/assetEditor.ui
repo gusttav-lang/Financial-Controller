@@ -111,6 +111,16 @@
      <item row="1" column="1">
       <widget class="QComboBox" name="comboBox_brokers"/>
      </item>
+     <item row="7" column="0">
+      <widget class="QLabel" name="label_8">
+       <property name="text">
+        <string>Categoria:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1">
+      <widget class="QComboBox" name="comboBox_categories"/>
+     </item>
     </layout>
    </item>
   </layout>

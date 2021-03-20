@@ -1,6 +1,7 @@
 import datetime
 from src.dao.objective import Objective
 from src.dao.broker import Broker
+from src.dao.assetcategory import AssetCategory
 
 
 class Asset:
@@ -15,6 +16,7 @@ class Asset:
         self._interest = "100% CDI" # it is a string since CDI and IPCA values are not defined in the software
         self._applied_money = 1000.0
         self._objective = None # Objective()
+        self._category = None # AssetCategory()
 
     def set_name(self, value : str) : self._name = value
     def set_broker(self, value : Broker) : self._broker = value
@@ -23,6 +25,7 @@ class Asset:
     def set_interest(self, value : str) : self._interest = value
     def set_applied_money(self, value : float) : self._applied_money = value
     def set_objective(self, value : Objective) : self._objective = value
+    def set_category(self, value : AssetCategory) : self._category = value
 
     @property
     def name(self):
@@ -51,3 +54,7 @@ class Asset:
     @property
     def objective(self):
         return self._objective
+
+    @property
+    def category(self):
+        return self._category

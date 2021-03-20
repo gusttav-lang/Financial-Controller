@@ -117,6 +117,16 @@ class Ui_assetsEditor(object):
 
         self.formLayout.setWidget(1, QFormLayout.FieldRole, self.comboBox_brokers)
 
+        self.label_8 = QLabel(assetsEditor)
+        self.label_8.setObjectName(u"label_8")
+
+        self.formLayout.setWidget(7, QFormLayout.LabelRole, self.label_8)
+
+        self.comboBox_categories = QComboBox(assetsEditor)
+        self.comboBox_categories.setObjectName(u"comboBox_categories")
+
+        self.formLayout.setWidget(7, QFormLayout.FieldRole, self.comboBox_categories)
+
 
         self.horizontalLayout_2.addLayout(self.formLayout)
 
@@ -137,5 +147,6 @@ class Ui_assetsEditor(object):
         self.label_5.setText(QCoreApplication.translate("assetsEditor", u"Taxa:", None))
         self.label_6.setText(QCoreApplication.translate("assetsEditor", u"Dinheiro aplicado:", None))
         self.label_7.setText(QCoreApplication.translate("assetsEditor", u"Objetivo:", None))
+        self.label_8.setText(QCoreApplication.translate("assetsEditor", u"Categoria:", None))
     # retranslateUi
 

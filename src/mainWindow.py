@@ -91,6 +91,9 @@ class MainWindow(QMainWindow):
                 
         tree_item_objetivos = QTreeWidgetItem(self.ui.tw_esquerdo)
         tree_item_objetivos.setText(0, gv.objetivos)
+
+        tree_item_categorias_ativos = QTreeWidgetItem(self.ui.tw_esquerdo)
+        tree_item_categorias_ativos.setText(0, gv.categorias_ativos)
         
         tree_item_ativos = QTreeWidgetItem(self.ui.tw_esquerdo)
         tree_item_ativos.setText(0, gv.ativos)
@@ -104,8 +107,8 @@ class MainWindow(QMainWindow):
         #tree_item_previsao_receitas = QTreeWidgetItem(self.ui.tw_esquerdo)
         #tree_item_previsao_receitas.setText(0, gv.previsao_receitas)
         
-        tree_item_categorias = QTreeWidgetItem(self.ui.tw_esquerdo)
-        tree_item_categorias.setText(0, gv.categorias)
+        tree_item_categorias_gastos = QTreeWidgetItem(self.ui.tw_esquerdo)
+        tree_item_categorias_gastos.setText(0, gv.categorias_gastos)
 
         tree_item_teto_gastos = QTreeWidgetItem(self.ui.tw_esquerdo)
         tree_item_teto_gastos.setText(0, gv.teto_gastos)
@@ -116,7 +119,11 @@ class MainWindow(QMainWindow):
         tree_item_gastos = QTreeWidgetItem(self.ui.tw_esquerdo)
         tree_item_gastos.setText(0, gv.gastos)
 
-        self.ui.tw_esquerdo.itemClicked.connect(self.tree_item_clicked)
+        self.ui.tw_esquerdo.itemClicked.connect(self.tree_item_clicked)        
+
+        # add years and months in tree:
+        for new_spent in self.__project.spent_in_month:
+            self.add_spent_in_tree(new_spent)
 
         #menus creation:
         self.menu_add_delete_father = QMenu(self.ui.tw_esquerdo) # used to group new and delete
@@ -153,10 +160,12 @@ class MainWindow(QMainWindow):
             self.__project.spent_in_month.append(new_spent)
             new_spent.year = add_interface.selected_year
             new_spent.month = add_interface.selected_month
+            self.add_spent_in_tree(new_spent)           
 
-            # create QTreeWidgetItem:
+    def add_spent_in_tree(self, new_spent : SpentInMonth):
+         # create QTreeWidgetItem:
             tree_item_gastos_list = self.ui.tw_esquerdo.findItems(gv.gastos, Qt.MatchExactly, 0) # get a list of QTreeWidgetItem
-            tree_item_year_list = self.ui.tw_esquerdo.findItems(str(add_interface.selected_year), Qt.MatchExactly | Qt.MatchRecursive, 0) # parei aqui, nao ta funcionando
+            tree_item_year_list = self.ui.tw_esquerdo.findItems(str(new_spent.year), Qt.MatchExactly | Qt.MatchRecursive, 0) # parei aqui, nao ta funcionando
             if (len(tree_item_year_list) == 0):
                 new_year_item = QTreeWidgetItem(tree_item_gastos_list[0])
                 new_year_item.setText(0, str(new_spent.year))
@@ -165,7 +174,7 @@ class MainWindow(QMainWindow):
             tree_item_new_month.setText(0, gv.Meses[new_spent.month])
             self.sort_tree_months_and_years()
             self.ui.tw_esquerdo.expandAll()
-
+    
     def sort_tree_months_and_years(self):
         #sort the months in ascendend order in the year and sort the years in ascendend order
         tree_item_gastos_list = self.ui.tw_esquerdo.findItems(gv.gastos, Qt.MatchExactly, 0) # get a list of QTreeWidgetItem
@@ -217,11 +226,14 @@ class MainWindow(QMainWindow):
             elif (item.text(0) == gv.objetivos):
                 objectivesEdt = ObjectivesEditor(self.__project.objectives)
                 self.ui.sw_central.addWidget(objectivesEdt)
-            elif (item.text(0) == gv.categorias):
+            elif (item.text(0) == gv.categorias_gastos):
                 spentCategoryEdt = SpentCategoryEditor(self.__project.spent_categories)
                 self.ui.sw_central.addWidget(spentCategoryEdt)
+            elif (item.text(0) == gv.categorias_ativos):
+                assetCategoryEdt = SpentCategoryEditor(self.__project.asset_categories)
+                self.ui.sw_central.addWidget(assetCategoryEdt)
             elif (item.text(0) == gv.ativos):
-                assetEdt = AssetsEditor(self.__project.assets, self.__project.brokers, self.__project.objectives)
+                assetEdt = AssetsEditor(self.__project.assets, self.__project.brokers, self.__project.objectives, self.__project.asset_categories)
                 self.ui.sw_central.addWidget(assetEdt)
             elif (item.text(0) == gv.passivos):
                 liabilityEdt = LiabilitiesEditor(self.__project.liabilities, self.__project.brokers)
