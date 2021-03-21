@@ -145,13 +145,33 @@ class SpentInMonthEditor(QWidget):
             twi_goal = QTableWidgetItem()
             twi_goal.setData(Qt.DisplayRole, spent_limit.amount)
             self.ui.tableWidget_sum.setItem(initial_row_count, 2, twi_goal)
+        self.update_spent_sum()
 
     def load_new_month(self):
         self.check_new_categories_for_spent_limit() # create SpentLimitGoal objects
+
+        # set the project_limit_goal as default
+        for project_spent_limit in self.__project_spent_limit_goal:
+            for spent_limit in self.__spent_in_month.spent_limit_goal:
+                if (spent_limit.category == project_spent_limit.category):
+                    spent_limit.set_amount(project_spent_limit.amount)
+                    break
+            
         # TODO:perguntar se quer importar gastos fixos, receitas e obrigar a planejar teto de gastos
 
     def update_spent_sum(self):
-        pass # update all categories sum of spent
+        # update all categories sum of spent
+        row = 0
+        for category in self.__spent_categories:
+            sum = 0.0
+            for fixed_spent in self.__spent_in_month.fixed_spent:
+                if fixed_spent.category == category:
+                    sum += fixed_spent.how_much
+            for spent in self.__spent_in_month.spent_list:
+                if spent.category == category:
+                    sum += spent.how_much
+            self.ui.tableWidget_sum.item(row, 1).setData(Qt.DisplayRole, sum)
+            row += 1
     
     def check_new_categories_for_spent_limit(self):
         #first, check if any category was excluded:
@@ -182,6 +202,7 @@ class SpentInMonthEditor(QWidget):
         if (column == 3):
             category = SpentCategory.get_category_by_name(self.ui.tableWidget_fixedSpent.item(row, column).data(Qt.DisplayRole), self.__spent_categories)
             self.__spent_in_month.fixed_spent[row].set_category(category)
+            self.update_spent_sum()
     
     def income_cell_changed(self, row : int, column : int):
         if (column == 0):
@@ -202,6 +223,7 @@ class SpentInMonthEditor(QWidget):
         if (column == 3):
             category = SpentCategory.get_category_by_name(self.ui.tableWidget_spent.item(row, column).data(Qt.DisplayRole), self.__spent_categories)
             self.__spent_in_month.spent_list[row].set_category(category)
+            self.update_spent_sum()
     
     def values_cell_changed(self, row : int, column : int):
         pass

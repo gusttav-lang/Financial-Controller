@@ -17,6 +17,7 @@ from src.liabilitiesEditor import LiabilitiesEditor
 from src.spentLimitGoalEditor import SpentLimitGoalEditor
 from src.spentInMonthEditor import SpentInMonthEditor
 from src.addSpentMonth import AddSpentMonth
+from src.spenteditor import SpentEditor
 
 # Definition of strings:
 from src.globalvars import GlobalVars as gv
@@ -242,10 +243,10 @@ class MainWindow(QMainWindow):
                 spentLimitEdt = SpentLimitGoalEditor(self.__project.standard_spent_limit, self.__project.spent_categories)
                 self.ui.sw_central.addWidget(spentLimitEdt)
             elif (item.text(0) == gv.gastos):
-                # adicionar alguma tela generica que permita adicionar um mês novo e que tenha resumo do que já está cadastrado
-                pass
-            elif (isinstance(item, TreeWidgetItemMonthYear)):
-                spentEdt = SpentInMonthEditor(item.spent_in_month, self.__project.spent_categories, self.__project.standard_spent_limit)
+                spentEdt = SpentEditor(self.new_spent_month)
                 self.ui.sw_central.addWidget(spentEdt)
+            elif (isinstance(item, TreeWidgetItemMonthYear)):
+                spentMonthEdt = SpentInMonthEditor(item.spent_in_month, self.__project.spent_categories, self.__project.standard_spent_limit)
+                self.ui.sw_central.addWidget(spentMonthEdt)
 
 #TODO: da pra criar um TreeWidgetItemYear para quando clica no ano. Assim da pra apresentar um resumo de despesas e receitar até o momento, bem como previsões (igual meu drive)

@@ -1,3 +1,4 @@
-criar tela para o treeitem 'gastos'
 criar tela para o treeitem ano. colocar objetivos e valores acumulados
 ao criar objeto (ativo, passivo, ...) setar o focus no nome nos editores
+fazer alocação ideal de ativos
+fazer ctrl+c ctrl+v nas planilhas

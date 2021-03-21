@@ -137,7 +137,7 @@ class Ui_assetsEditor(object):
     # setupUi
 
     def retranslateUi(self, assetsEditor):
-        assetsEditor.setWindowTitle(QCoreApplication.translate("assetsEditor", u"Brokers", None))
+        assetsEditor.setWindowTitle(QCoreApplication.translate("assetsEditor", u"Assets", None))
         self.btn_add.setText(QCoreApplication.translate("assetsEditor", u"Adicionar", None))
         self.btn_delete.setText(QCoreApplication.translate("assetsEditor", u"Deletar", None))
         self.label.setText(QCoreApplication.translate("assetsEditor", u"Nome:", None))
