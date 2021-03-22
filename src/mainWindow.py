@@ -1,12 +1,16 @@
 from PySide2.QtWidgets import QMainWindow, QWidget, QTreeWidgetItem, QFileDialog, QMessageBox, QMenu, QAction, QTreeWidgetItemIterator
 from src.ui.mainWindow_ui import Ui_MainWindow
 from PySide2.QtCore import Qt, QModelIndex
+
+# Tools:
 from src.tools.TreeWidgetItemMonthYear import TreeWidgetItemMonthYear
+from src.tools.TreeWidgetItemYear import TreeWidgetItemYear
 
 # DAO:
 from src.dao.project import Project
 from src.dao.projectdao import ProjectDAO
 from src.dao.spentinmonth import SpentInMonth
+from src.dao.yearpredictions import YearPredictions
 
 # Interfaces:
 from src.brokersEditor import BrokersEditor
@@ -18,6 +22,7 @@ from src.spentLimitGoalEditor import SpentLimitGoalEditor
 from src.spentInMonthEditor import SpentInMonthEditor
 from src.addSpentMonth import AddSpentMonth
 from src.spenteditor import SpentEditor
+from src.spentInYearEditor import SpentInYearEditor
 
 # Definition of strings:
 from src.globalvars import GlobalVars as gv
@@ -158,17 +163,23 @@ class MainWindow(QMainWindow):
         if add_interface.confirmed:
             # create object:
             new_spent = SpentInMonth()
-            self.__project.spent_in_month.append(new_spent)
             new_spent.year = add_interface.selected_year
             new_spent.month = add_interface.selected_month
+            self.__project.spent_in_month.append(new_spent)
             self.add_spent_in_tree(new_spent)           
 
     def add_spent_in_tree(self, new_spent : SpentInMonth):
          # create QTreeWidgetItem:
             tree_item_gastos_list = self.ui.tw_esquerdo.findItems(gv.gastos, Qt.MatchExactly, 0) # get a list of QTreeWidgetItem
-            tree_item_year_list = self.ui.tw_esquerdo.findItems(str(new_spent.year), Qt.MatchExactly | Qt.MatchRecursive, 0) # parei aqui, nao ta funcionando
+            tree_item_year_list = self.ui.tw_esquerdo.findItems(str(new_spent.year), Qt.MatchExactly | Qt.MatchRecursive, 0)
             if (len(tree_item_year_list) == 0):
-                new_year_item = QTreeWidgetItem(tree_item_gastos_list[0])
+                if (YearPredictions.is_year_in_list(new_spent.year, self.__project.year_predictions_list) == True):
+                    year_predictions = YearPredictions.find_year_in_list(new_spent.year, self.__project.year_predictions_list)
+                else:
+                    year_predictions = YearPredictions()
+                    year_predictions._year = new_spent.year
+                self.__project.year_predictions_list.append(year_predictions)
+                new_year_item = TreeWidgetItemYear(tree_item_gastos_list[0], year_predictions)
                 new_year_item.setText(0, str(new_spent.year))
                 tree_item_year_list.append(new_year_item)
             tree_item_new_month = TreeWidgetItemMonthYear(tree_item_year_list[0], new_spent)
@@ -248,5 +259,6 @@ class MainWindow(QMainWindow):
             elif (isinstance(item, TreeWidgetItemMonthYear)):
                 spentMonthEdt = SpentInMonthEditor(item.spent_in_month, self.__project.spent_categories, self.__project.standard_spent_limit)
                 self.ui.sw_central.addWidget(spentMonthEdt)
-
-#TODO: da pra criar um TreeWidgetItemYear para quando clica no ano. Assim da pra apresentar um resumo de despesas e receitar até o momento, bem como previsões (igual meu drive)
+            elif (isinstance(item, TreeWidgetItemYear)):
+                spentYearEdt = SpentInYearEditor(item.year_predictions, self.__project.spent_in_month)
+                self.ui.sw_central.addWidget(spentYearEdt)

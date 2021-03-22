@@ -11,6 +11,7 @@ from src.tools.CategoryComboBoxItemDelegate import CategoryComboBoxItemDelegate
 from src.dao.revenueforecast import RevenueForecast
 from src.dao.spent import Spent
 from src.dao.spentlimitgoal import SpentLimitGoal
+from PySide2.QtGui import QColor, QBrush, QFont
 
 
 class SpentInMonthEditor(QWidget):
@@ -143,6 +144,9 @@ class SpentInMonthEditor(QWidget):
             twi_sum.setFlags(Qt.ItemIsEnabled) # Disable for edition
             self.ui.tableWidget_sum.setItem(initial_row_count, 1, twi_sum)
             twi_goal = QTableWidgetItem()
+            bold_font = QFont()
+            bold_font.setBold(True)
+            twi_goal.setFont(bold_font)
             twi_goal.setData(Qt.DisplayRole, spent_limit.amount)
             self.ui.tableWidget_sum.setItem(initial_row_count, 2, twi_goal)
         self.update_spent_sum()
@@ -229,5 +233,11 @@ class SpentInMonthEditor(QWidget):
         pass
     
     def sum_cell_changed(self, row : int, column : int):
+        if (column == 1):
+            if (float(self.ui.tableWidget_sum.item(row, 1).data(Qt.DisplayRole)) <= float(self.ui.tableWidget_sum.item(row, 2).data(Qt.DisplayRole))):
+                font_color = QColor(0, 200, 0)
+            else:
+                font_color = QColor(255, 0, 0)
+            self.ui.tableWidget_sum.item(row, 1).setForeground(QBrush(font_color))         
         if (column == 2):
             self.__spent_in_month.spent_limit_goal[row].set_amount(float(self.ui.tableWidget_sum.item(row, column).data(Qt.DisplayRole)))
