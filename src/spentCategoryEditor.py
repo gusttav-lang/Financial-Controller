@@ -69,7 +69,9 @@ class SpentCategoryEditor(QWidget):
         spent_category = SpentCategory()
         self.__spent_categories.append(spent_category)
         self.add_list_widget_item(spent_category)
-        self.enable_widgets()
+        self.enable_widgets()        
+        self.ui.lineEdit_Name.selectAll()
+        self.ui.lineEdit_Name.setFocus()
 
     def delete_spent_category(self):
         # delete spent_category

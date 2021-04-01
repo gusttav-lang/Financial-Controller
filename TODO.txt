@@ -1,4 +1,3 @@
-ao criar objeto (ativo, passivo, ...) setar o focus no nome nos editores
 fazer alocação ideal de ativos
 fazer ctrl+c ctrl+v nas planilhas
 fazer table income

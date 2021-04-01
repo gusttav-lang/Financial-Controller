@@ -80,7 +80,9 @@ class ObjectivesEditor(QWidget):
         objective = Objective()
         self.__objectives.append(objective)
         self.add_list_widget_item(objective)
-        self.enable_widgets()
+        self.enable_widgets()        
+        self.ui.lineEdit_Name.selectAll()
+        self.ui.lineEdit_Name.setFocus()
 
     def delete_objective(self):
         # delete objective

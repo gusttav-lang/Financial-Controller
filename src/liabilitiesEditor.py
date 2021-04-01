@@ -91,6 +91,8 @@ class LiabilitiesEditor(QWidget):
         self.__liabilities.append(liability)
         self.add_list_widget_item(liability)
         self.enable_widgets()
+        self.ui.lineEdit_Name.selectAll()
+        self.ui.lineEdit_Name.setFocus()
 
     def delete_liability(self):
         # delete liability

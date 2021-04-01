@@ -101,6 +101,8 @@ class AssetsEditor(QWidget):
         self.__assets.append(asset)
         self.add_list_widget_item(asset)
         self.enable_widgets()
+        self.ui.lineEdit_Name.selectAll()
+        self.ui.lineEdit_Name.setFocus()
 
     def delete_asset(self):
         # delete asset

@@ -73,6 +73,8 @@ class BrokersEditor(QWidget):
         self.__brokers.append(broker)
         self.add_list_widget_item(broker)
         self.enable_widgets()
+        self.ui.lineEdit_Name.selectAll()
+        self.ui.lineEdit_Name.setFocus()
 
     def delete_broker(self):
         # delete broker
