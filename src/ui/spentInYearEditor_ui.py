@@ -113,6 +113,13 @@ class Ui_spentInYearEditor(object):
 
         self.groupBox_3 = QGroupBox(spentInYearEditor)
         self.groupBox_3.setObjectName(u"groupBox_3")
+        self.gridLayout_2 = QGridLayout(self.groupBox_3)
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.widget_chart = QWidget(self.groupBox_3)
+        self.widget_chart.setObjectName(u"widget_chart")
+
+        self.gridLayout_2.addWidget(self.widget_chart, 0, 0, 1, 1)
+
 
         self.verticalLayout.addWidget(self.groupBox_3)
 

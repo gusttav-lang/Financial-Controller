@@ -1,13 +1,14 @@
-from PySide2.QtWidgets import QWidget, QTableWidgetItem
+from PySide2.QtWidgets import QWidget, QTableWidgetItem, QVBoxLayout
 from src.ui.spentInYearEditor_ui import Ui_spentInYearEditor
 from src.dao.yearpredictions import YearPredictions
 from src.dao.valuesinyear import ValuesInYear
 from PySide2.QtCore import Qt
 from src.dao.spentinmonth import SpentInMonth
+from src.tools.matplotlibPieChart import CategoryPieChart
 
 
 class SpentInYearEditor(QWidget):
-    def __init__(self, year_predictions: YearPredictions, spent_in_month : list):
+    def __init__(self, year_predictions: YearPredictions, spent_in_month : list, spent_categories : list):
         super().__init__()
         self.ui = Ui_spentInYearEditor()
         self.ui.setupUi(self)
@@ -15,12 +16,21 @@ class SpentInYearEditor(QWidget):
         # DAO:
         self.__spent_in_month_list = spent_in_month
         self.__year_predictions = year_predictions
+        self.__spent_categories = spent_categories
 
         # load interface and connects:
         self.load_tables()
         self.make_connects()
 
         self.ui.lbl_ano.setText(str(year_predictions._year))
+        self.setup_plot()
+
+    def setup_plot(self):
+        if len(self.__spent_categories) > 0:
+            chart = CategoryPieChart(self.__spent_categories, self)
+            layout = QVBoxLayout(self.ui.widget_chart)        
+            layout.addWidget(chart,1)
+            chart.plot()
 
     def make_connects(self):        
         self.ui.tableWidget_earnings.cellChanged.connect(self.earnings_cell_changed)

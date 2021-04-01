@@ -112,6 +112,11 @@ class Ui_spentInMonthEditor(object):
         self.groupBox_5.setObjectName(u"groupBox_5")
         self.gridLayout_5 = QGridLayout(self.groupBox_5)
         self.gridLayout_5.setObjectName(u"gridLayout_5")
+        self.widget_chart = QWidget(self.groupBox_5)
+        self.widget_chart.setObjectName(u"widget_chart")
+
+        self.gridLayout_5.addWidget(self.widget_chart, 0, 1, 1, 1)
+
         self.tableWidget_sum = QTableWidget(self.groupBox_5)
         if (self.tableWidget_sum.columnCount() < 3):
             self.tableWidget_sum.setColumnCount(3)
@@ -124,11 +129,6 @@ class Ui_spentInMonthEditor(object):
         self.tableWidget_sum.setObjectName(u"tableWidget_sum")
 
         self.gridLayout_5.addWidget(self.tableWidget_sum, 0, 0, 1, 1)
-
-        self.label_2 = QLabel(self.groupBox_5)
-        self.label_2.setObjectName(u"label_2")
-
-        self.gridLayout_5.addWidget(self.label_2, 0, 1, 1, 1)
 
 
         self.gridLayout_6.addWidget(self.groupBox_5, 3, 2, 1, 1)
@@ -177,6 +177,5 @@ class Ui_spentInMonthEditor(object):
         ___qtablewidgetitem13.setText(QCoreApplication.translate("spentInMonthEditor", u"Gasto", None));
         ___qtablewidgetitem14 = self.tableWidget_sum.horizontalHeaderItem(2)
         ___qtablewidgetitem14.setText(QCoreApplication.translate("spentInMonthEditor", u"Meta teto m\u00eas", None));
-        self.label_2.setText(QCoreApplication.translate("spentInMonthEditor", u"grafico", None))
     # retranslateUi
 

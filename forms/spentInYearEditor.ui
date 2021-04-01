@@ -164,6 +164,11 @@
      <property name="title">
       <string>Gastos até o momento</string>
      </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QWidget" name="widget_chart" native="true"/>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>
