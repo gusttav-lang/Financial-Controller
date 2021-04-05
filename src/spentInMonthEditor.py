@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QWidget, QTableWidgetItem
+from PySide2.QtWidgets import QWidget, QTableWidgetItem, QVBoxLayout
 from src.ui.spentInMonthEditor_ui import Ui_spentInMonthEditor
 from PySide2.QtCore import Qt
 from src.dao.project import Project
@@ -12,6 +12,7 @@ from src.dao.revenueforecast import RevenueForecast
 from src.dao.spent import Spent
 from src.dao.spentlimitgoal import SpentLimitGoal
 from PySide2.QtGui import QColor, QBrush, QFont
+from src.tools.matplotlibPieChart import CategoryPieChart
 
 
 class SpentInMonthEditor(QWidget):
@@ -24,6 +25,8 @@ class SpentInMonthEditor(QWidget):
         self.__spent_in_month = spent_in_month
         self.__spent_categories = spent_categories
         self.__project_spent_limit_goal = project_spent_limit_goal
+        
+        self.setup_plot()
 
         if (len(spent_in_month.spent_list) == 0 and len(spent_in_month.fixed_spent) == 0
             and len(spent_in_month.revenue_forecast) == 0):
@@ -34,6 +37,12 @@ class SpentInMonthEditor(QWidget):
         self.make_connects()
 
         self.ui.label.setText(gv.Meses[spent_in_month.month] + "/" + str(spent_in_month.year))
+
+    def setup_plot(self):
+        if len(self.__spent_categories) > 0:
+            self.chart = CategoryPieChart(self.__spent_categories, self)
+            layout = QVBoxLayout(self.ui.widget_chart)        
+            layout.addWidget(self.chart,1)
 
     def make_connects(self):        
         self.ui.tableWidget_fixedSpent.cellChanged.connect(self.fixed_spent_cell_changed)
@@ -166,6 +175,7 @@ class SpentInMonthEditor(QWidget):
     def update_spent_sum(self):
         # update all categories sum of spent
         row = 0
+        sum_list_for_chart = []
         for category in self.__spent_categories:
             sum = 0.0
             for fixed_spent in self.__spent_in_month.fixed_spent:
@@ -176,6 +186,8 @@ class SpentInMonthEditor(QWidget):
                     sum += spent.how_much
             self.ui.tableWidget_sum.item(row, 1).setData(Qt.DisplayRole, sum)
             row += 1
+            sum_list_for_chart.append(sum)
+        self.chart.plot(sum_list_for_chart)
     
     def check_new_categories_for_spent_limit(self):
         #first, check if any category was excluded:

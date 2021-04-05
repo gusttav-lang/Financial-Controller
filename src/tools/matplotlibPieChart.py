@@ -12,15 +12,11 @@ class CategoryPieChart(FigureCanvas):
         self.setParent(parent)
 
         self.labels = []
-        self.values = []
-        cont = 1
         for category in categories:
             self.labels.append(category.name)
-            self.values.append(cont)
-            cont += 1
         
         self.ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
-    def plot(self):
-        self.ax.pie(self.values, labels=self.labels, autopct='%1.1f%%',
+    def plot(self, spent_values_list : list):
+        self.ax.pie(spent_values_list, labels=self.labels, autopct='%1.1f%%',
                 shadow=True, startangle=90)
