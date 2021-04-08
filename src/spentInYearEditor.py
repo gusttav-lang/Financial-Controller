@@ -26,11 +26,25 @@ class SpentInYearEditor(QWidget):
         self.setup_plot()
 
     def setup_plot(self):
-        if len(self.__spent_categories) > 0:
-            chart = CategoryPieChart(self.__spent_categories, self)
-            layout = QVBoxLayout(self.ui.widget_chart)        
-            layout.addWidget(chart,1)
-            chart.plot()
+        #if len(self.__spent_categories) > 0:
+        chart = CategoryPieChart(self.__spent_categories, self)
+        layout = QVBoxLayout(self.ui.widget_chart)        
+        layout.addWidget(chart,1)
+
+        # sum spent in each category for the plot:
+        sum_list_for_chart = []
+        for category in self.__spent_categories:
+            sum = 0.0
+            for spent_month in self.__spent_in_month_list:
+                if spent_month.year == self.__year_predictions._year:                    
+                    for spent in spent_month.spent_list:
+                        if spent.category == category:
+                            sum += spent.how_much
+                    for fixed_spent in spent_month.fixed_spent:
+                        if fixed_spent.category == category:
+                            sum += fixed_spent.how_much
+            sum_list_for_chart.append(sum)
+        chart.plot(sum_list_for_chart)
 
     def make_connects(self):        
         self.ui.tableWidget_earnings.cellChanged.connect(self.earnings_cell_changed)

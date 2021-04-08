@@ -1,5 +1,4 @@
-import datetime
-from src.dao.asset import Asset
+from src.dao.assetcategory import AssetCategory
 
 
 class AssetsInMonth:
@@ -11,6 +10,12 @@ class AssetsInMonth:
     not computing the CDI and IPCA indexes.
     """
     def __init__(self):
-        self.checked_day = datetime.date.today()
-        self.assets = []
-        self.values = [] # must have the same count as assets
+        self._checked_day = 0  # int
+        self._assets = []  # Asset_Category
+        self._values = [] # must have the same count as assets
+
+    def set_checked_day(self, value : str) : self._name = value
+
+    @property
+    def checked_day(self):
+        return self._checked_day

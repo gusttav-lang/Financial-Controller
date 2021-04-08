@@ -13,10 +13,15 @@ from src.dao.spent import Spent
 from src.dao.spentlimitgoal import SpentLimitGoal
 from PySide2.QtGui import QColor, QBrush, QFont
 from src.tools.matplotlibPieChart import CategoryPieChart
+from src.dao.assetcategory import AssetCategory
+from src.dao.assetsinmonth import AssetsInMonth
 
 
 class SpentInMonthEditor(QWidget):
-    def __init__(self, spent_in_month: SpentInMonth, spent_categories, project_spent_limit_goal):
+    color_green = QColor(0, 200, 0)
+    color_red = QColor(255, 0, 0)
+
+    def __init__(self, spent_in_month: SpentInMonth, spent_categories, project_spent_limit_goal, asset_categories):
         super().__init__()
         self.ui = Ui_spentInMonthEditor()
         self.ui.setupUi(self)
@@ -25,6 +30,7 @@ class SpentInMonthEditor(QWidget):
         self.__spent_in_month = spent_in_month
         self.__spent_categories = spent_categories
         self.__project_spent_limit_goal = project_spent_limit_goal
+        self.__asset_categories = asset_categories
         
         self.setup_plot()
 
@@ -39,10 +45,10 @@ class SpentInMonthEditor(QWidget):
         self.ui.label.setText(gv.Meses[spent_in_month.month] + "/" + str(spent_in_month.year))
 
     def setup_plot(self):
-        if len(self.__spent_categories) > 0:
-            self.chart = CategoryPieChart(self.__spent_categories, self)
-            layout = QVBoxLayout(self.ui.widget_chart)        
-            layout.addWidget(self.chart,1)
+        #if len(self.__spent_categories) > 0:
+        self.chart = CategoryPieChart(self.__spent_categories, self)
+        layout = QVBoxLayout(self.ui.widget_chart)        
+        layout.addWidget(self.chart,1)
 
     def make_connects(self):        
         self.ui.tableWidget_fixedSpent.cellChanged.connect(self.fixed_spent_cell_changed)
@@ -135,7 +141,18 @@ class SpentInMonthEditor(QWidget):
             current_row += 1
 
     def load_values_table(self):
-        pass
+        self.ui.tableWidget_values.setColumnCount(len(self.__asset_categories) + 1)
+        headers = ["Dia verificado"]
+        for asset_category in self.__asset_categories:
+            headers.append(asset_category.name)
+        self.ui.tableWidget_values.setHorizontalHeaderLabels(headers)
+
+        '''number_of_line = 3
+        self.ui.tableWidget_values.setRowCount(number_of_line)
+        while (len(self.__spent_in_month.revenue_forecast) < number_of_line):
+            new_revenue = RevenueForecast()
+            self.__spent_in_month.revenue_forecast.append(new_revenue)
+        current_row = 0'''
 
     def load_sum_table(self):
         self.check_new_categories_for_spent_limit()
@@ -159,6 +176,7 @@ class SpentInMonthEditor(QWidget):
             twi_goal.setData(Qt.DisplayRole, spent_limit.amount)
             self.ui.tableWidget_sum.setItem(initial_row_count, 2, twi_goal)
         self.update_spent_sum()
+        self.update_all_colors_sum_table()
 
     def load_new_month(self):
         self.check_new_categories_for_spent_limit() # create SpentLimitGoal objects
@@ -245,11 +263,17 @@ class SpentInMonthEditor(QWidget):
         pass
     
     def sum_cell_changed(self, row : int, column : int):
-        if (column == 1):
-            if (float(self.ui.tableWidget_sum.item(row, 1).data(Qt.DisplayRole)) <= float(self.ui.tableWidget_sum.item(row, 2).data(Qt.DisplayRole))):
-                font_color = QColor(0, 200, 0)
-            else:
-                font_color = QColor(255, 0, 0)
-            self.ui.tableWidget_sum.item(row, 1).setForeground(QBrush(font_color))         
         if (column == 2):
-            self.__spent_in_month.spent_limit_goal[row].set_amount(float(self.ui.tableWidget_sum.item(row, column).data(Qt.DisplayRole)))
+            self.__spent_in_month.spent_limit_goal[row].set_amount(float(self.ui.tableWidget_sum.item(row, column).data(Qt.DisplayRole)))        
+        self.update_row_color_sum_table(row)    
+
+    def update_all_colors_sum_table(self):
+        for row in range(self.ui.tableWidget_sum.rowCount()):
+            self.update_row_color_sum_table(row)
+
+    def update_row_color_sum_table(self, row : int):
+        if (float(self.ui.tableWidget_sum.item(row, 1).data(Qt.DisplayRole)) <= float(self.ui.tableWidget_sum.item(row, 2).data(Qt.DisplayRole))):
+            font_color = self.color_green
+        else:
+            font_color = self.color_red
+        self.ui.tableWidget_sum.item(row, 1).setForeground(QBrush(font_color)) 

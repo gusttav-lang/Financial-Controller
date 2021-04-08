@@ -257,7 +257,7 @@ class MainWindow(QMainWindow):
                 spentEdt = SpentEditor(self.new_spent_month)
                 self.ui.sw_central.addWidget(spentEdt)
             elif (isinstance(item, TreeWidgetItemMonthYear)):
-                spentMonthEdt = SpentInMonthEditor(item.spent_in_month, self.__project.spent_categories, self.__project.standard_spent_limit)
+                spentMonthEdt = SpentInMonthEditor(item.spent_in_month, self.__project.spent_categories, self.__project.standard_spent_limit, self.__project.asset_categories)
                 self.ui.sw_central.addWidget(spentMonthEdt)
             elif (isinstance(item, TreeWidgetItemYear)):
                 spentYearEdt = SpentInYearEditor(item.year_predictions, self.__project.spent_in_month, self.__project.spent_categories)

@@ -1,7 +1,7 @@
 fazer alocação ideal de ativos
 fazer ctrl+c ctrl+v nas planilhas
 fazer table income
-fazer gráfico no mês
-fazer gráfico no ano
 criar gasto essencial, supérfulo?
 rever quantidade de linhas em cada tabela do SpentInMonthEditor e SpentInYearEditor
+criar salvar como e atualizar salvar para o mesmo path
+ajustar layouts spent_in_month
