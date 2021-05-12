@@ -18,20 +18,36 @@ class Ui_spentInMonthEditor(object):
         if not spentInMonthEditor.objectName():
             spentInMonthEditor.setObjectName(u"spentInMonthEditor")
         spentInMonthEditor.resize(1122, 846)
-        self.gridLayout_6 = QGridLayout(spentInMonthEditor)
-        self.gridLayout_6.setObjectName(u"gridLayout_6")
+        self.verticalLayout = QVBoxLayout(spentInMonthEditor)
+        self.verticalLayout.setObjectName(u"verticalLayout")
         self.label = QLabel(spentInMonthEditor)
         self.label.setObjectName(u"label")
         font = QFont()
         font.setPointSize(16)
         self.label.setFont(font)
+        self.label.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout_6.addWidget(self.label, 0, 1, 1, 1)
+        self.verticalLayout.addWidget(self.label)
 
-        self.groupBox = QGroupBox(spentInMonthEditor)
+        self.splitter_4 = QSplitter(spentInMonthEditor)
+        self.splitter_4.setObjectName(u"splitter_4")
+        self.splitter_4.setOrientation(Qt.Vertical)
+        self.frame_3 = QFrame(self.splitter_4)
+        self.frame_3.setObjectName(u"frame_3")
+        self.frame_3.setFrameShape(QFrame.StyledPanel)
+        self.frame_3.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout = QHBoxLayout(self.frame_3)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.splitter_3 = QSplitter(self.frame_3)
+        self.splitter_3.setObjectName(u"splitter_3")
+        self.splitter_3.setOrientation(Qt.Horizontal)
+        self.groupBox = QGroupBox(self.splitter_3)
         self.groupBox.setObjectName(u"groupBox")
         self.gridLayout = QGridLayout(self.groupBox)
+        self.gridLayout.setSpacing(0)
         self.gridLayout.setObjectName(u"gridLayout")
+        self.gridLayout.setContentsMargins(3, 0, 3, 0)
         self.tableWidget_fixedSpent = QTableWidget(self.groupBox)
         if (self.tableWidget_fixedSpent.columnCount() < 4):
             self.tableWidget_fixedSpent.setColumnCount(4)
@@ -47,13 +63,13 @@ class Ui_spentInMonthEditor(object):
 
         self.gridLayout.addWidget(self.tableWidget_fixedSpent, 0, 0, 1, 1)
 
-
-        self.gridLayout_6.addWidget(self.groupBox, 1, 0, 1, 1)
-
-        self.groupBox_2 = QGroupBox(spentInMonthEditor)
+        self.splitter_3.addWidget(self.groupBox)
+        self.groupBox_2 = QGroupBox(self.splitter_3)
         self.groupBox_2.setObjectName(u"groupBox_2")
         self.gridLayout_2 = QGridLayout(self.groupBox_2)
+        self.gridLayout_2.setSpacing(0)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.gridLayout_2.setContentsMargins(3, 0, 3, 0)
         self.tableWidget_income = QTableWidget(self.groupBox_2)
         if (self.tableWidget_income.columnCount() < 3):
             self.tableWidget_income.setColumnCount(3)
@@ -67,13 +83,36 @@ class Ui_spentInMonthEditor(object):
 
         self.gridLayout_2.addWidget(self.tableWidget_income, 0, 0, 1, 1)
 
+        self.splitter_3.addWidget(self.groupBox_2)
 
-        self.gridLayout_6.addWidget(self.groupBox_2, 1, 1, 1, 2)
+        self.horizontalLayout.addWidget(self.splitter_3)
 
-        self.groupBox_3 = QGroupBox(spentInMonthEditor)
+        self.splitter_4.addWidget(self.frame_3)
+        self.frame_4 = QFrame(self.splitter_4)
+        self.frame_4.setObjectName(u"frame_4")
+        self.frame_4.setFrameShape(QFrame.StyledPanel)
+        self.frame_4.setFrameShadow(QFrame.Raised)
+        self.gridLayout_7 = QGridLayout(self.frame_4)
+        self.gridLayout_7.setSpacing(0)
+        self.gridLayout_7.setObjectName(u"gridLayout_7")
+        self.gridLayout_7.setContentsMargins(0, 0, 0, 0)
+        self.splitter_2 = QSplitter(self.frame_4)
+        self.splitter_2.setObjectName(u"splitter_2")
+        self.splitter_2.setOrientation(Qt.Horizontal)
+        self.frame_2 = QFrame(self.splitter_2)
+        self.frame_2.setObjectName(u"frame_2")
+        self.frame_2.setFrameShape(QFrame.StyledPanel)
+        self.frame_2.setFrameShadow(QFrame.Raised)
+        self.gridLayout_8 = QGridLayout(self.frame_2)
+        self.gridLayout_8.setSpacing(0)
+        self.gridLayout_8.setObjectName(u"gridLayout_8")
+        self.gridLayout_8.setContentsMargins(0, 0, 0, 0)
+        self.groupBox_3 = QGroupBox(self.frame_2)
         self.groupBox_3.setObjectName(u"groupBox_3")
         self.gridLayout_3 = QGridLayout(self.groupBox_3)
+        self.gridLayout_3.setSpacing(0)
         self.gridLayout_3.setObjectName(u"gridLayout_3")
+        self.gridLayout_3.setContentsMargins(3, 0, 3, 0)
         self.tableWidget_spent = QTableWidget(self.groupBox_3)
         if (self.tableWidget_spent.columnCount() < 4):
             self.tableWidget_spent.setColumnCount(4)
@@ -90,12 +129,26 @@ class Ui_spentInMonthEditor(object):
         self.gridLayout_3.addWidget(self.tableWidget_spent, 0, 0, 1, 1)
 
 
-        self.gridLayout_6.addWidget(self.groupBox_3, 2, 0, 2, 1)
+        self.gridLayout_8.addWidget(self.groupBox_3, 0, 0, 1, 1)
 
-        self.groupBox_4 = QGroupBox(spentInMonthEditor)
+        self.splitter_2.addWidget(self.frame_2)
+        self.frame = QFrame(self.splitter_2)
+        self.frame.setObjectName(u"frame")
+        self.frame.setFrameShape(QFrame.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Raised)
+        self.gridLayout_6 = QGridLayout(self.frame)
+        self.gridLayout_6.setSpacing(0)
+        self.gridLayout_6.setObjectName(u"gridLayout_6")
+        self.gridLayout_6.setContentsMargins(0, 0, 0, 0)
+        self.splitter = QSplitter(self.frame)
+        self.splitter.setObjectName(u"splitter")
+        self.splitter.setOrientation(Qt.Vertical)
+        self.groupBox_4 = QGroupBox(self.splitter)
         self.groupBox_4.setObjectName(u"groupBox_4")
         self.gridLayout_4 = QGridLayout(self.groupBox_4)
+        self.gridLayout_4.setSpacing(0)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
+        self.gridLayout_4.setContentsMargins(3, 0, 3, 0)
         self.tableWidget_values = QTableWidget(self.groupBox_4)
         if (self.tableWidget_values.columnCount() < 1):
             self.tableWidget_values.setColumnCount(1)
@@ -105,19 +158,17 @@ class Ui_spentInMonthEditor(object):
 
         self.gridLayout_4.addWidget(self.tableWidget_values, 0, 0, 1, 1)
 
-
-        self.gridLayout_6.addWidget(self.groupBox_4, 2, 1, 1, 2)
-
-        self.groupBox_5 = QGroupBox(spentInMonthEditor)
+        self.splitter.addWidget(self.groupBox_4)
+        self.groupBox_5 = QGroupBox(self.splitter)
         self.groupBox_5.setObjectName(u"groupBox_5")
         self.gridLayout_5 = QGridLayout(self.groupBox_5)
+        self.gridLayout_5.setSpacing(0)
         self.gridLayout_5.setObjectName(u"gridLayout_5")
-        self.widget_chart = QWidget(self.groupBox_5)
-        self.widget_chart.setObjectName(u"widget_chart")
-
-        self.gridLayout_5.addWidget(self.widget_chart, 0, 1, 1, 1)
-
-        self.tableWidget_sum = QTableWidget(self.groupBox_5)
+        self.gridLayout_5.setContentsMargins(3, 0, 3, 0)
+        self.splitter_5 = QSplitter(self.groupBox_5)
+        self.splitter_5.setObjectName(u"splitter_5")
+        self.splitter_5.setOrientation(Qt.Horizontal)
+        self.tableWidget_sum = QTableWidget(self.splitter_5)
         if (self.tableWidget_sum.columnCount() < 3):
             self.tableWidget_sum.setColumnCount(3)
         __qtablewidgetitem12 = QTableWidgetItem()
@@ -127,11 +178,24 @@ class Ui_spentInMonthEditor(object):
         __qtablewidgetitem14 = QTableWidgetItem()
         self.tableWidget_sum.setHorizontalHeaderItem(2, __qtablewidgetitem14)
         self.tableWidget_sum.setObjectName(u"tableWidget_sum")
+        self.splitter_5.addWidget(self.tableWidget_sum)
+        self.widget_chart = QWidget(self.splitter_5)
+        self.widget_chart.setObjectName(u"widget_chart")
+        self.splitter_5.addWidget(self.widget_chart)
 
-        self.gridLayout_5.addWidget(self.tableWidget_sum, 0, 0, 1, 1)
+        self.gridLayout_5.addWidget(self.splitter_5, 0, 0, 1, 1)
 
+        self.splitter.addWidget(self.groupBox_5)
 
-        self.gridLayout_6.addWidget(self.groupBox_5, 3, 2, 1, 1)
+        self.gridLayout_6.addWidget(self.splitter, 0, 0, 1, 1)
+
+        self.splitter_2.addWidget(self.frame)
+
+        self.gridLayout_7.addWidget(self.splitter_2, 0, 0, 1, 1)
+
+        self.splitter_4.addWidget(self.frame_4)
+
+        self.verticalLayout.addWidget(self.splitter_4)
 
 
         self.retranslateUi(spentInMonthEditor)

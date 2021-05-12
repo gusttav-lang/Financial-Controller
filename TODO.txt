@@ -3,5 +3,4 @@ fazer ctrl+c ctrl+v nas planilhas
 criar gasto essencial, supérfulo?
 criar definição de oportunidades. Da pra adicionar um campo a mais na categoria de ativos
 rever quantidade de linhas em cada tabela do SpentInMonthEditor e SpentInYearEditor
-ajustar layouts spent_in_month
 no assets in year, mostrar valor absoluto no grafico
