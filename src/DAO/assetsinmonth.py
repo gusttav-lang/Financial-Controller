@@ -10,12 +10,22 @@ class AssetsInMonth:
     not computing the CDI and IPCA indexes.
     """
     def __init__(self):
-        self._checked_day = 0  # int
-        self._assets = []  # Asset_Category
-        self._values = [] # must have the same count as assets
+        self._checked_day = None  # int
+        self._category = None  # Asset_Category
+        self._value = None # must have the same count as assets
 
-    def set_checked_day(self, value : str) : self._name = value
+    def set_checked_day(self, value : int) : self._checked_day = value
+    def set_category(self, value : AssetCategory()) : self._category = value
+    def set_value(self, value : float) : self._value = value
 
     @property
     def checked_day(self):
         return self._checked_day
+
+    @property
+    def category(self):
+        return self._category
+
+    @property
+    def value(self):
+        return self._value

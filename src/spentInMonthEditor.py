@@ -145,14 +145,55 @@ class SpentInMonthEditor(QWidget):
         headers = ["Dia verificado"]
         for asset_category in self.__asset_categories:
             headers.append(asset_category.name)
+        for asset_in_month in self.__spent_in_month.assets_in_month:
+            if asset_in_month.category.name not in headers:  # check for categories that were added in the month and excluded after that
+                headers.append(asset_in_month.category.name) 
+                self.__asset_categories.append(asset_in_month.category)
         self.ui.tableWidget_values.setHorizontalHeaderLabels(headers)
 
-        '''number_of_line = 3
-        self.ui.tableWidget_values.setRowCount(number_of_line)
-        while (len(self.__spent_in_month.revenue_forecast) < number_of_line):
-            new_revenue = RevenueForecast()
-            self.__spent_in_month.revenue_forecast.append(new_revenue)
+        number_of_lines = 5
+        self.ui.tableWidget_values.setRowCount(number_of_lines)
+        for i in range(number_of_lines):
+            for j in range(len(headers)):
+                twi = QTableWidgetItem()
+                self.ui.tableWidget_values.setItem(i, j, twi)
+
+        for asset_in_month in self.__spent_in_month.assets_in_month:
+            self.add_asset_in_month_to_table(asset_in_month)
+
+        '''
+        Here I need to make it different. I can't know if the position of the asset_in_month inside the list
+        while (len(self.__spent_in_month.revenue_forecast)/(len(headers)-1) < number_of_line):
+            new_asset_in_month = AssetsInMonth()
+            self.__spent_in_month.assets_in_month.append(new_asset_in_month)
         current_row = 0'''
+
+    def add_asset_in_month_to_table(self, asset_in_month : AssetsInMonth):
+        # find first empty line:
+        first_empty_line = -1
+        for i in range(self.ui.tableWidget_values.rowCount()):
+            if self.ui.tableWidget_values.item(i, 0).data(Qt.DisplayRole) == None:
+                first_empty_line = i
+                break
+        
+        # search the line, if does not exist, add a new one:
+        line_of_asset_in_month = -1
+        for i in range(self.ui.tableWidget_values.rowCount()):
+            if asset_in_month.checked_day == self.ui.tableWidget_values.item(i, 0).data(Qt.DisplayRole):
+                line_of_asset_in_month = i
+                break
+        if line_of_asset_in_month == -1:
+            line_of_asset_in_month = first_empty_line
+            self.ui.tableWidget_values.item(first_empty_line, 0).setData(Qt.DisplayRole, asset_in_month.checked_day)
+
+        # find the correct column:
+        column_of_asset_in_month = -1
+        for i in range(1, self.ui.tableWidget_values.columnCount()):
+            if asset_in_month.category.name == self.ui.tableWidget_values.horizontalHeaderItem(i).text():
+                column_of_asset_in_month = i
+                break
+
+        self.ui.tableWidget_values.item(line_of_asset_in_month, column_of_asset_in_month).setData(Qt.DisplayRole, asset_in_month.value)
 
     def load_sum_table(self):
         self.check_new_categories_for_spent_limit()
@@ -260,7 +301,27 @@ class SpentInMonthEditor(QWidget):
             self.update_spent_sum()
     
     def values_cell_changed(self, row : int, column : int):
-        pass
+        if column > 0: # TODO: deveria atualizar o valor do dia em cada um dos assets_in_month para coluna 0
+            checked_day = self.ui.tableWidget_values.item(row, 0).data(Qt.DisplayRole)
+            if checked_day != None:
+                asset_category = None
+                for category in self.__asset_categories:
+                    if self.ui.tableWidget_values.horizontalHeaderItem(column).text() == category.name:
+                        asset_category = category
+                        break
+                if asset_category != None:
+                    asset_in_month_is_already_in_list = False
+                    for asset_in_month in self.__spent_in_month.assets_in_month:
+                        if asset_in_month.checked_day == checked_day and asset_in_month.category == asset_category:
+                            asset_in_month_is_already_in_list = True
+                            asset_in_month.set_value(self.ui.tableWidget_values.item(row, column).data(Qt.DisplayRole))
+                            break
+                    if asset_in_month_is_already_in_list == False:  # if asset does not already exist, create a new one
+                        asset_in_month = AssetsInMonth()
+                        asset_in_month.set_category(asset_category)
+                        asset_in_month.set_checked_day(checked_day)
+                        asset_in_month.set_value(self.ui.tableWidget_values.item(row, column).data(Qt.DisplayRole))
+                        self.__spent_in_month.assets_in_month.append(asset_in_month)
     
     def sum_cell_changed(self, row : int, column : int):
         if (column == 2):
