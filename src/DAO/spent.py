@@ -13,9 +13,17 @@ class Spent:
         self._category = None # SpentCategory()
 
     def set_where(self, value : str) : self._where = value
-    def set_how_much(self, value : float) : self._how_much = value
+    def set_how_much(self, value : float) :
+        try:
+            fl = float(value)
+        except:
+            fl = None
+        self._how_much = fl
     def set_day(self, day: int, month: int, year: int) : 
-        value = datetime.date(year, month, day)
+        try:
+            value = datetime.date(year, month, day)
+        except:
+            value = None
         self._day = value
     def set_category(self, value : SpentCategory) : self._category = value
     

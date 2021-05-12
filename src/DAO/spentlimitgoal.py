@@ -12,7 +12,12 @@ class SpentLimitGoal:
         self._amount = 0.0
 
     def set_category(self, value : SpentCategory) : self._category = value
-    def set_amount(self, value : float) : self._amount = value
+    def set_amount(self, value : float) :        
+        try:
+            fl = float(value)
+        except:
+            fl = None        
+        self._amount = fl
 
     @property
     def category(self):

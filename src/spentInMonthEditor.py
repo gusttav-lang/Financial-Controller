@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QWidget, QTableWidgetItem, QVBoxLayout
+from PySide2.QtWidgets import QWidget, QTableWidgetItem, QVBoxLayout, QApplication
 from src.ui.spentInMonthEditor_ui import Ui_spentInMonthEditor
 from PySide2.QtCore import Qt
 from src.dao.project import Project
@@ -11,7 +11,7 @@ from src.tools.CategoryComboBoxItemDelegate import CategoryComboBoxItemDelegate
 from src.dao.revenueforecast import RevenueForecast
 from src.dao.spent import Spent
 from src.dao.spentlimitgoal import SpentLimitGoal
-from PySide2.QtGui import QColor, QBrush, QFont
+from PySide2.QtGui import QColor, QBrush, QFont, QKeyEvent
 from src.tools.matplotlibPieChart import CategoryPieChart
 from src.dao.assetcategory import AssetCategory
 from src.dao.assetsinmonth import AssetsInMonth
@@ -239,10 +239,12 @@ class SpentInMonthEditor(QWidget):
             sum = 0.0
             for fixed_spent in self.__spent_in_month.fixed_spent:
                 if fixed_spent.category == category:
-                    sum += fixed_spent.how_much
+                    if (fixed_spent.how_much != None):
+                        sum += fixed_spent.how_much
             for spent in self.__spent_in_month.spent_list:
                 if spent.category == category:
-                    sum += spent.how_much
+                    if (spent.how_much != None):
+                        sum += spent.how_much
             self.ui.tableWidget_sum.item(row, 1).setData(Qt.DisplayRole, sum)
             row += 1
             sum_list_for_chart.append(sum)
@@ -270,10 +272,10 @@ class SpentInMonthEditor(QWidget):
         if (column == 0):
             self.__spent_in_month.fixed_spent[row].set_what(self.ui.tableWidget_fixedSpent.item(row, column).data(Qt.DisplayRole))
         if (column == 1):
-            self.__spent_in_month.fixed_spent[row].set_how_much(float(self.ui.tableWidget_fixedSpent.item(row, column).data(Qt.DisplayRole)))
+            self.__spent_in_month.fixed_spent[row].set_how_much(self.ui.tableWidget_fixedSpent.item(row, column).data(Qt.DisplayRole))
             self.update_spent_sum()
         if (column == 2):
-            self.__spent_in_month.fixed_spent[row].set_day_in_month(int(self.ui.tableWidget_fixedSpent.item(row, column).data(Qt.DisplayRole)))
+            self.__spent_in_month.fixed_spent[row].set_day_in_month(self.ui.tableWidget_fixedSpent.item(row, column).data(Qt.DisplayRole))
         if (column == 3):
             category = SpentCategory.get_category_by_name(self.ui.tableWidget_fixedSpent.item(row, column).data(Qt.DisplayRole), self.__spent_categories)
             self.__spent_in_month.fixed_spent[row].set_category(category)
@@ -283,15 +285,15 @@ class SpentInMonthEditor(QWidget):
         if (column == 0):
             self.__spent_in_month.revenue_forecast[row].set_what(self.ui.tableWidget_income.item(row, column).data(Qt.DisplayRole))
         if (column == 1):
-            self.__spent_in_month.revenue_forecast[row].set_how_much(float(self.ui.tableWidget_income.item(row, column).data(Qt.DisplayRole)))
+            self.__spent_in_month.revenue_forecast[row].set_how_much(self.ui.tableWidget_income.item(row, column).data(Qt.DisplayRole))
         if (column == 2):
-            self.__spent_in_month.revenue_forecast[row].set_day_in_month(int(self.ui.tableWidget_income.item(row, column).data(Qt.DisplayRole)))
+            self.__spent_in_month.revenue_forecast[row].set_day_in_month(self.ui.tableWidget_income.item(row, column).data(Qt.DisplayRole))
     
     def spent_cell_changed(self, row : int, column : int):
         if (column == 0):
-            self.__spent_in_month.spent_list[row].set_day(int(self.ui.tableWidget_spent.item(row, column).data(Qt.DisplayRole)), self.__spent_in_month.month, self.__spent_in_month.year)            
+            self.__spent_in_month.spent_list[row].set_day(self.ui.tableWidget_spent.item(row, column).data(Qt.DisplayRole), self.__spent_in_month.month, self.__spent_in_month.year)            
         if (column == 1):
-            self.__spent_in_month.spent_list[row].set_how_much(float(self.ui.tableWidget_spent.item(row, column).data(Qt.DisplayRole)))
+            self.__spent_in_month.spent_list[row].set_how_much(self.ui.tableWidget_spent.item(row, column).data(Qt.DisplayRole))
             self.update_spent_sum()
         if (column == 2):
             self.__spent_in_month.spent_list[row].set_where(self.ui.tableWidget_spent.item(row, column).data(Qt.DisplayRole))
@@ -301,7 +303,24 @@ class SpentInMonthEditor(QWidget):
             self.update_spent_sum()
     
     def values_cell_changed(self, row : int, column : int):
-        if column > 0: # TODO: deveria atualizar o valor do dia em cada um dos assets_in_month para coluna 0
+        if column == 0:
+            days = []
+            for i in range(self.ui.tableWidget_values.rowCount()):
+                days.append(self.ui.tableWidget_values.item(i, 0).data(Qt.DisplayRole))
+
+            # find out excluded day:
+            excluded_day = -1
+            for asset_in_month in self.__spent_in_month.assets_in_month:
+                if asset_in_month.checked_day not in days:
+                    excluded_day = asset_in_month.checked_day
+                    break
+
+            # update excluded day for new day in the correspondent assets
+            for asset_in_month in self.__spent_in_month.assets_in_month:
+                if asset_in_month.checked_day == excluded_day:
+                    asset_in_month.set_checked_day(self.ui.tableWidget_values.item(row, 0).data(Qt.DisplayRole))
+            
+        elif column > 0:
             checked_day = self.ui.tableWidget_values.item(row, 0).data(Qt.DisplayRole)
             if checked_day != None:
                 asset_category = None
@@ -325,7 +344,7 @@ class SpentInMonthEditor(QWidget):
     
     def sum_cell_changed(self, row : int, column : int):
         if (column == 2):
-            self.__spent_in_month.spent_limit_goal[row].set_amount(float(self.ui.tableWidget_sum.item(row, column).data(Qt.DisplayRole)))        
+            self.__spent_in_month.spent_limit_goal[row].set_amount(self.ui.tableWidget_sum.item(row, column).data(Qt.DisplayRole))  
         self.update_row_color_sum_table(row)    
 
     def update_all_colors_sum_table(self):
@@ -333,8 +352,34 @@ class SpentInMonthEditor(QWidget):
             self.update_row_color_sum_table(row)
 
     def update_row_color_sum_table(self, row : int):
-        if (float(self.ui.tableWidget_sum.item(row, 1).data(Qt.DisplayRole)) <= float(self.ui.tableWidget_sum.item(row, 2).data(Qt.DisplayRole))):
-            font_color = self.color_green
-        else:
+        try:
+            if (float(self.ui.tableWidget_sum.item(row, 1).data(Qt.DisplayRole)) <= float(self.ui.tableWidget_sum.item(row, 2).data(Qt.DisplayRole))):
+                font_color = self.color_green
+            else:
+                font_color = self.color_red
+        except:
             font_color = self.color_red
         self.ui.tableWidget_sum.item(row, 1).setForeground(QBrush(font_color)) 
+
+    def keyPressEvent(self, event : QKeyEvent):
+        super().keyPressEvent(event)
+
+        # Delete Key:
+        if (event.key() == Qt.Key_Delete):
+            current_widget = QApplication.focusWidget()
+            if (current_widget == self.ui.tableWidget_fixedSpent or
+                current_widget == self.ui.tableWidget_income or
+                current_widget == self.ui.tableWidget_spent or
+                current_widget == self.ui.tableWidget_values or
+                current_widget == self.ui.tableWidget_sum):
+                row_count = current_widget.rowCount()
+                column_count = current_widget.columnCount()
+                for item in current_widget.selectedItems():
+                    row = item.row()
+                    column = item.column()
+                    if (row > -1 and row < row_count and column > -1 and column < column_count):
+                        current_widget.item(row, column).setData(Qt.DisplayRole, None)
+
+        # Ctrl + c:
+
+         # Ctrl + v:

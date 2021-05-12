@@ -8,8 +8,18 @@ class RecurringValues:
         self._day_in_month = None # int
 
     def set_what(self, value : str) : self._what = value
-    def set_how_much(self, value : float) : self._how_much = value
-    def set_day_in_month(self, value : int) : self._day_in_month = value
+    def set_how_much(self, value : float) :
+        try:
+            fl = float(value)
+        except:
+            fl = None
+        self._how_much = fl
+    def set_day_in_month(self, value : int) :
+        try:
+            i = int(value)
+        except:
+            i = None
+        self._day_in_month = i
     
     @property
     def what(self):

@@ -1,5 +1,4 @@
 fazer alocação ideal de ativos
 fazer ctrl+c ctrl+v nas planilhas
-criar gasto essencial, supérfulo?
 rever quantidade de linhas em cada tabela do SpentInMonthEditor e SpentInYearEditor
 no assets in year, mostrar valor absoluto no grafico
