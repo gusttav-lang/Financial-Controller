@@ -23,6 +23,7 @@ from src.spentInMonthEditor import SpentInMonthEditor
 from src.addSpentMonth import AddSpentMonth
 from src.spenteditor import SpentEditor
 from src.spentInYearEditor import SpentInYearEditor
+from src.assetCategoryEditor import AssetCategoryEditor
 
 # Definition of strings:
 from src.globalvars import GlobalVars as gv
@@ -242,7 +243,7 @@ class MainWindow(QMainWindow):
                 spentCategoryEdt = SpentCategoryEditor(self.__project.spent_categories)
                 self.ui.sw_central.addWidget(spentCategoryEdt)
             elif (item.text(0) == gv.categorias_ativos):
-                assetCategoryEdt = SpentCategoryEditor(self.__project.asset_categories)
+                assetCategoryEdt = AssetCategoryEditor(self.__project.asset_categories)
                 self.ui.sw_central.addWidget(assetCategoryEdt)
             elif (item.text(0) == gv.ativos):
                 assetEdt = AssetsEditor(self.__project.assets, self.__project.brokers, self.__project.objectives, self.__project.asset_categories)
