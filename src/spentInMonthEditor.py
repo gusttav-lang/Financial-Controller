@@ -65,7 +65,10 @@ class SpentInMonthEditor(QWidget):
         self.load_sum_table()        
 
     def load_fixed_spent_table(self):
-        number_of_line = 10
+        if (len(self.__spent_in_month.fixed_spent) < 10):
+            number_of_line = 10
+        else:
+            number_of_line = len(self.__spent_in_month.fixed_spent)
         self.ui.tableWidget_fixedSpent.setRowCount(number_of_line)
         while (len(self.__spent_in_month.fixed_spent) < number_of_line):
             new_fixed_spent = FixedSpent()
@@ -93,7 +96,10 @@ class SpentInMonthEditor(QWidget):
             current_row += 1
     
     def load_income_table(self):        
-        number_of_line = 10
+        if (len(self.__spent_in_month.revenue_forecast) < 10):
+            number_of_line = 10
+        else:
+            number_of_line = len(self.__spent_in_month.revenue_forecast)
         self.ui.tableWidget_income.setRowCount(number_of_line)
         while (len(self.__spent_in_month.revenue_forecast) < number_of_line):
             new_revenue = RevenueForecast()
@@ -113,7 +119,10 @@ class SpentInMonthEditor(QWidget):
             current_row += 1
 
     def load_spent_table(self):
-        number_of_line = 50
+        if (len(self.__spent_in_month.spent_list) < 50):
+            number_of_line = 50
+        else:
+            number_of_line = len(self.__spent_in_month.spent_list)
         self.ui.tableWidget_spent.setRowCount(number_of_line)
         while (len(self.__spent_in_month.spent_list) < number_of_line):
             new_spent = Spent()
@@ -368,10 +377,10 @@ class SpentInMonthEditor(QWidget):
         if (event.key() == Qt.Key_Delete):
             current_widget = QApplication.focusWidget()
             if (current_widget == self.ui.tableWidget_fixedSpent or
-                current_widget == self.ui.tableWidget_income or
-                current_widget == self.ui.tableWidget_spent or
-                current_widget == self.ui.tableWidget_values or
-                current_widget == self.ui.tableWidget_sum):
+                    current_widget == self.ui.tableWidget_income or
+                    current_widget == self.ui.tableWidget_spent or
+                    current_widget == self.ui.tableWidget_values or
+                    current_widget == self.ui.tableWidget_sum):
                 row_count = current_widget.rowCount()
                 column_count = current_widget.columnCount()
                 for item in current_widget.selectedItems():
@@ -381,5 +390,89 @@ class SpentInMonthEditor(QWidget):
                         current_widget.item(row, column).setData(Qt.DisplayRole, None)
 
         # Ctrl + c:
+        if (event.key() == Qt.Key_C and event.modifiers() == Qt.ControlModifier):
+            current_widget = QApplication.focusWidget()
+            if (current_widget == self.ui.tableWidget_fixedSpent or
+                    current_widget == self.ui.tableWidget_income or
+                    current_widget == self.ui.tableWidget_spent or
+                    current_widget == self.ui.tableWidget_values or
+                    current_widget == self.ui.tableWidget_sum):                
+                items = current_widget.selectedItems()
+                text = ""
+                previous_row = -1
+                for item in items:
+                    current_row = item.row()
+                    if (previous_row == -1):
+                        pass                
+                    elif (current_row == previous_row):
+                        text += "\t"
+                    elif (current_row == previous_row + 1):
+                        text += "\n"
 
-         # Ctrl + v:
+                    if (item.data(Qt.DisplayRole) != None):
+                        text += str(item.data(Qt.DisplayRole))
+                    previous_row = item.row()
+
+                QApplication.clipboard().setText(text)
+
+        # Ctrl + v:
+        if (event.key() == Qt.Key_V and event.modifiers() == Qt.ControlModifier):
+            current_widget = QApplication.focusWidget()
+            if (current_widget == self.ui.tableWidget_fixedSpent or
+                    current_widget == self.ui.tableWidget_income or
+                    current_widget == self.ui.tableWidget_spent or
+                    current_widget == self.ui.tableWidget_values or
+                    current_widget == self.ui.tableWidget_sum):
+                column_count = current_widget.columnCount()
+                row_count = current_widget.rowCount()
+                text = QApplication.clipboard().text()
+                current_row = current_widget.currentRow()
+                initial_column = current_widget.currentColumn()
+                lines = text.split('\n')
+                text_all_lines = []
+                for line in lines:
+                    cells = line.split('\t')
+                    text_all_lines.append(cells)
+                for line in text_all_lines:
+                    if (current_row >= current_widget.rowCount()):  # check if a new line is needed
+                        self.add_one_empty_lines(current_widget)
+                    column = initial_column
+                    for cell in line:
+                        if column < column_count:
+                            current_widget.item(current_row, column).setData(Qt.DisplayRole, cell)
+                        column += 1
+
+                    current_row += 1
+
+        # Insert
+        if (event.key() == Qt.Key_Insert):
+            current_widget = QApplication.focusWidget()
+            if (current_widget == self.ui.tableWidget_fixedSpent or
+                    current_widget == self.ui.tableWidget_income or
+                    current_widget == self.ui.tableWidget_spent):
+                self.add_one_empty_lines(current_widget)
+
+
+    def add_one_empty_lines(self, table : QWidget):
+        # add line to 'table' and create item in dao list, if needed
+        def create_twi(table : QWidget()):
+            for j in range(table.columnCount()):
+                twi = QTableWidgetItem()
+                table.setItem(table.rowCount() - 1, j, twi)
+
+        if (table == self.ui.tableWidget_fixedSpent):
+            new_fixed_spent = FixedSpent()
+            self.__spent_in_month.fixed_spent.append(new_fixed_spent)
+            table.setRowCount(table.rowCount() + 1)
+            create_twi(table)
+            
+        elif table == self.ui.tableWidget_income:
+            new_revenue = RevenueForecast()
+            self.__spent_in_month.revenue_forecast.append(new_revenue)
+            table.setRowCount(table.rowCount() + 1)
+            create_twi(table)
+        elif table == self.ui.tableWidget_spent:
+            new_spent = Spent()
+            self.__spent_in_month.spent_list.append(new_spent)
+            table.setRowCount(table.rowCount() + 1)
+            create_twi(table)

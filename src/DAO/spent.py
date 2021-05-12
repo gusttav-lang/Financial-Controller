@@ -21,7 +21,7 @@ class Spent:
         self._how_much = fl
     def set_day(self, day: int, month: int, year: int) : 
         try:
-            value = datetime.date(year, month, day)
+            value = datetime.date(year, month, int(day))
         except:
             value = None
         self._day = value

@@ -1,4 +1,4 @@
 fazer alocação ideal de ativos
-fazer ctrl+c ctrl+v nas planilhas
-rever quantidade de linhas em cada tabela do SpentInMonthEditor e SpentInYearEditor
 no assets in year, mostrar valor absoluto no grafico
+ajustar tamanho inicial de cada tabela para meu monitor
+criar delegate para double e para int -> isso deve resolver problema de mostrar valores inválidos (com virgula) e nao salvar no dao
