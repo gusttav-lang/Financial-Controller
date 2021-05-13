@@ -24,6 +24,7 @@ from src.addSpentMonth import AddSpentMonth
 from src.spenteditor import SpentEditor
 from src.spentInYearEditor import SpentInYearEditor
 from src.assetCategoryEditor import AssetCategoryEditor
+from src.idealAssetsEditor import IdealAssetsEditor
 
 # Definition of strings:
 from src.globalvars import GlobalVars as gv
@@ -263,3 +264,6 @@ class MainWindow(QMainWindow):
             elif (isinstance(item, TreeWidgetItemYear)):
                 spentYearEdt = SpentInYearEditor(item.year_predictions, self.__project.spent_in_month, self.__project.spent_categories)
                 self.ui.sw_central.addWidget(spentYearEdt)
+            elif (item.text(0) == gv.alocacao_ideal):
+                idealEdt = IdealAssetsEditor(self.__project.assets_in_dates_list, self.__project.ideal_assets_list, self.__project.asset_categories)
+                self.ui.sw_central.addWidget(idealEdt)

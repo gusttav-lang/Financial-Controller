@@ -56,7 +56,7 @@ class SpentInMonthEditor(QWidget):
         layout = QVBoxLayout(self.ui.widget_chart)        
         layout.addWidget(self.chart,1)
 
-    def make_connects(self):        
+    def make_connects(self):
         self.ui.tableWidget_fixedSpent.cellChanged.connect(self.fixed_spent_cell_changed)
         self.ui.tableWidget_income.cellChanged.connect(self.income_cell_changed)
         self.ui.tableWidget_spent.cellChanged.connect(self.spent_cell_changed)
@@ -208,12 +208,12 @@ class SpentInMonthEditor(QWidget):
         # search the line, if does not exist, add a new one:
         line_of_asset_in_month = -1
         for i in range(self.ui.tableWidget_values.rowCount()):
-            if asset_in_month.checked_day == self.ui.tableWidget_values.item(i, 0).data(Qt.DisplayRole):
+            if asset_in_month.checked_day.day == self.ui.tableWidget_values.item(i, 0).data(Qt.DisplayRole):
                 line_of_asset_in_month = i
                 break
         if line_of_asset_in_month == -1:
             line_of_asset_in_month = first_empty_line
-            self.ui.tableWidget_values.item(first_empty_line, 0).setData(Qt.DisplayRole, asset_in_month.checked_day)
+            self.ui.tableWidget_values.item(first_empty_line, 0).setData(Qt.DisplayRole, asset_in_month.checked_day.day)
 
         # find the correct column:
         column_of_asset_in_month = -1
@@ -340,14 +340,14 @@ class SpentInMonthEditor(QWidget):
             # find out excluded day:
             excluded_day = -1
             for asset_in_month in self.__spent_in_month.assets_in_month:
-                if asset_in_month.checked_day not in days:
-                    excluded_day = asset_in_month.checked_day
+                if asset_in_month.checked_day.day not in days:
+                    excluded_day = asset_in_month.checked_day.day
                     break
 
             # update excluded day for new day in the correspondent assets
             for asset_in_month in self.__spent_in_month.assets_in_month:
-                if asset_in_month.checked_day == excluded_day:
-                    asset_in_month.set_checked_day(self.ui.tableWidget_values.item(row, 0).data(Qt.DisplayRole))
+                if asset_in_month.checked_day.day == excluded_day:
+                    asset_in_month.set_checked_day(self.ui.tableWidget_values.item(row, 0).data(Qt.DisplayRole), self.__spent_in_month.month, self.__spent_in_month.year)
             
         elif column > 0:
             checked_day = self.ui.tableWidget_values.item(row, 0).data(Qt.DisplayRole)
@@ -360,14 +360,14 @@ class SpentInMonthEditor(QWidget):
                 if asset_category != None:
                     asset_in_month_is_already_in_list = False
                     for asset_in_month in self.__spent_in_month.assets_in_month:
-                        if asset_in_month.checked_day == checked_day and asset_in_month.category == asset_category:
+                        if asset_in_month.checked_day.day == checked_day and asset_in_month.category == asset_category:
                             asset_in_month_is_already_in_list = True
                             asset_in_month.set_value(self.ui.tableWidget_values.item(row, column).data(Qt.DisplayRole))
                             break
                     if asset_in_month_is_already_in_list == False:  # if asset does not already exist, create a new one
                         asset_in_month = AssetsInMonth()
                         asset_in_month.set_category(asset_category)
-                        asset_in_month.set_checked_day(checked_day)
+                        asset_in_month.set_checked_day(checked_day, self.__spent_in_month.month, self.__spent_in_month.year)
                         asset_in_month.set_value(self.ui.tableWidget_values.item(row, column).data(Qt.DisplayRole))
                         self.__spent_in_month.assets_in_month.append(asset_in_month)
     

@@ -1,4 +1,5 @@
 from src.dao.assetcategory import AssetCategory
+import datetime
 
 
 class AssetsInMonth:
@@ -14,7 +15,13 @@ class AssetsInMonth:
         self._category = None  # Asset_Category
         self._value = None # must have the same count as assets
 
-    def set_checked_day(self, value : int) : self._checked_day = value
+    def set_checked_day(self, day: int, month: int, year: int) : 
+        try:
+            value = datetime.date(year, month, int(day))
+        except:
+            value = None
+        self._checked_day = value
+    def set_checked_day_as_datetime(self, value : datetime.date) : self._checked_day = value
     def set_category(self, value : AssetCategory()) : self._category = value
     def set_value(self, value : float) : self._value = value
 

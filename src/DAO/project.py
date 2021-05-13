@@ -21,3 +21,5 @@ class Project:
         self.standard_spent_limit = [] # SpentLimitGoal
         self.asset_categories = [] # AssetCategory
         self.year_predictions_list = [] # YearPredicitons
+        self.assets_in_dates_list = []  # AssetsInMonth - used in Ideal Assets Editor
+        self.ideal_assets_list = []  # Ideal Assets

@@ -20,6 +20,8 @@ class ProjectDAO:
                 project.standard_spent_limit = project_from_file.standard_spent_limit
                 project.asset_categories = project_from_file.asset_categories
                 project.year_predictions_list = project_from_file.year_predictions_list
+                project.assets_in_dates_list = project_from_file.assets_in_dates_list
+                project.ideal_assets_list = project_from_file.ideal_assets_list
             return True
         except :
             return False
