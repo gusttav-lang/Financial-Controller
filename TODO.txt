@@ -1,4 +1,3 @@
 fazer alocação ideal de ativos
 no assets in year, mostrar valor absoluto no grafico
 ajustar tamanho inicial de cada tabela para meu monitor
-criar delegate para double e para int -> isso deve resolver problema de mostrar valores inválidos (com virgula) e nao salvar no dao

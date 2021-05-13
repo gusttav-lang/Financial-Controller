@@ -1,20 +1,26 @@
+# Qt:
 from PySide2.QtWidgets import QWidget, QTableWidgetItem, QVBoxLayout, QApplication
-from src.ui.spentInMonthEditor_ui import Ui_spentInMonthEditor
+from PySide2.QtGui import QColor, QBrush, QFont, QKeyEvent
 from PySide2.QtCore import Qt
+# General
+from src.ui.spentInMonthEditor_ui import Ui_spentInMonthEditor
+from src.globalvars import GlobalVars as gv
+# DAO:
 from src.dao.project import Project
 from src.dao.spentcategory import SpentCategory
 from src.dao.spentlimitgoal import SpentLimitGoal
 from src.dao.spentinmonth import SpentInMonth
-from src.globalvars import GlobalVars as gv
 from src.dao.fixedspent import FixedSpent
-from src.tools.CategoryComboBoxItemDelegate import CategoryComboBoxItemDelegate
 from src.dao.revenueforecast import RevenueForecast
 from src.dao.spent import Spent
 from src.dao.spentlimitgoal import SpentLimitGoal
-from PySide2.QtGui import QColor, QBrush, QFont, QKeyEvent
-from src.tools.matplotlibPieChart import CategoryPieChart
 from src.dao.assetcategory import AssetCategory
 from src.dao.assetsinmonth import AssetsInMonth
+# Tools:
+from src.tools.CategoryComboBoxItemDelegate import CategoryComboBoxItemDelegate
+from src.tools.matplotlibPieChart import CategoryPieChart
+from src.tools.doubledelegate import DoubleDelegate
+from src.tools.dayinmonthdelegate import DayInMonthDelegate
 
 
 class SpentInMonthEditor(QWidget):
@@ -75,9 +81,13 @@ class SpentInMonthEditor(QWidget):
             self.__spent_in_month.fixed_spent.append(new_fixed_spent)
         current_row = 0
 
-        # create category combobox:
+        # create delegates:
         cbd = CategoryComboBoxItemDelegate(self.__spent_categories, self.ui.tableWidget_fixedSpent)
         self.ui.tableWidget_fixedSpent.setItemDelegateForColumn(3,cbd)
+        double_delegate = DoubleDelegate(self.ui.tableWidget_fixedSpent)
+        self.ui.tableWidget_fixedSpent.setItemDelegateForColumn(1, double_delegate)
+        dimd = DayInMonthDelegate(self.ui.tableWidget_fixedSpent)
+        self.ui.tableWidget_fixedSpent.setItemDelegateForColumn(2, dimd)
 
         for fixed_spent in self.__spent_in_month.fixed_spent:
             twi_what = QTableWidgetItem()
@@ -106,6 +116,12 @@ class SpentInMonthEditor(QWidget):
             self.__spent_in_month.revenue_forecast.append(new_revenue)
         current_row = 0
 
+        # create delegates:
+        double_delegate = DoubleDelegate(self.ui.tableWidget_income)
+        self.ui.tableWidget_income.setItemDelegateForColumn(1, double_delegate)
+        dimd = DayInMonthDelegate(self.ui.tableWidget_income)
+        self.ui.tableWidget_income.setItemDelegateForColumn(2, dimd)
+
         for income in self.__spent_in_month.revenue_forecast:
             twi_what = QTableWidgetItem()
             twi_what.setData(Qt.DisplayRole, income.what)
@@ -129,9 +145,13 @@ class SpentInMonthEditor(QWidget):
             self.__spent_in_month.spent_list.append(new_spent)
         current_row = 0
 
-        # create category combobox:
+        # create delegates:
         cbd = CategoryComboBoxItemDelegate(self.__spent_categories, self.ui.tableWidget_spent)
         self.ui.tableWidget_spent.setItemDelegateForColumn(3,cbd)
+        double_delegate = DoubleDelegate(self.ui.tableWidget_spent)
+        self.ui.tableWidget_spent.setItemDelegateForColumn(1, double_delegate)
+        dimd = DayInMonthDelegate(self.ui.tableWidget_spent)
+        self.ui.tableWidget_spent.setItemDelegateForColumn(0, dimd)
 
         for spent in self.__spent_in_month.spent_list:
             twi_how_day = QTableWidgetItem()
