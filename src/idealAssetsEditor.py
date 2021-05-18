@@ -102,12 +102,27 @@ class IdealAssetsEditor(QWidget):
         self.ui.tableWidget_ideal.setColumnCount(len(headers))
         self.ui.tableWidget_ideal.setHorizontalHeaderLabels(headers)
 
-        # check if a category was excluded:
+        # create QTableWidgetItems:
+        for i in range(self.ui.tableWidget_ideal.rowCount()):
+            for j in range(self.ui.tableWidget_ideal.columnCount()):
+                twi = QTableWidgetItem()
+                self.ui.tableWidget_ideal.setItem(i,j,twi)
+
+        # create delegate:
+        double_delegate = DoubleDelegate(self.ui.tableWidget_ideal)
+        self.ui.tableWidget_ideal.setItemDelegate(double_delegate)
+
+        # check if a category was excluded and then delete:
+        for ideal_asset in reversed(self.__ideal_assets_list):
+            if ideal_asset.category not in self.__asset_categories:
+                self.__ideal_assets_list.remove(ideal_asset)
+
+        # Complete the table. If item does not exist, create it:
+        # Fazer um find pela celula esperada ponto a ponto
 
 
 
     def today_cell_changed(self, row : int, column : int):
-        # parei aqui, verificar essa função. vai dar problema na conversão de QDate pra datetime
         if column == 0:
             days = []
             for i in range(self.ui.tableWidget_today.rowCount()):

@@ -2,3 +2,4 @@ fazer alocação ideal de ativos
 no spent in year, mostrar valor absoluto no grafico
 ajustar tamanho inicial de cada tabela para meu monitor
 fazer criterios de ações em janela separada? colocar número de ações e setores?
+adicionar coluna especifica para reserva de emergencia?
