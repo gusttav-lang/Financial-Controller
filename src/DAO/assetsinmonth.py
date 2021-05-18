@@ -1,3 +1,4 @@
+from PySide2.QtCore import QDate
 from src.dao.assetcategory import AssetCategory
 import datetime
 
@@ -21,7 +22,11 @@ class AssetsInMonth:
         except:
             value = None
         self._checked_day = value
-    def set_checked_day_as_datetime(self, value : datetime.date) : self._checked_day = value
+    def set_checked_day_as_datetime(self, value : datetime.date):
+        if isinstance(value, QDate):
+            self._checked_day = value.toPython()
+        else:
+            self._checked_day = value
     def set_category(self, value : AssetCategory()) : self._category = value
     def set_value(self, value : float) : self._value = value
 

@@ -170,14 +170,14 @@ class SpentInMonthEditor(QWidget):
             current_row += 1
 
     def load_values_table(self):
-        self.ui.tableWidget_values.setColumnCount(len(self.__asset_categories) + 1)
         headers = ["Dia verificado"]
         for asset_category in self.__asset_categories:
             headers.append(asset_category.name)
         for asset_in_month in self.__spent_in_month.assets_in_month:
             if asset_in_month.category.name not in headers:  # check for categories that were added in the month and excluded after that
                 headers.append(asset_in_month.category.name) 
-                self.__asset_categories.append(asset_in_month.category)
+                self.__asset_categories.append(asset_in_month.category)                
+        self.ui.tableWidget_values.setColumnCount(len(headers))
         self.ui.tableWidget_values.setHorizontalHeaderLabels(headers)
 
         number_of_lines = 5
