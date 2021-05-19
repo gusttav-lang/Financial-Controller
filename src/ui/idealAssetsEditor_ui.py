@@ -82,11 +82,11 @@ class Ui_idealAssetsEditor(object):
         self.splitter = QSplitter(self.frame)
         self.splitter.setObjectName(u"splitter")
         self.splitter.setOrientation(Qt.Horizontal)
-        self.frame_graph_tofay = QFrame(self.splitter)
-        self.frame_graph_tofay.setObjectName(u"frame_graph_tofay")
-        self.frame_graph_tofay.setFrameShape(QFrame.StyledPanel)
-        self.frame_graph_tofay.setFrameShadow(QFrame.Raised)
-        self.splitter.addWidget(self.frame_graph_tofay)
+        self.frame_graph_today = QFrame(self.splitter)
+        self.frame_graph_today.setObjectName(u"frame_graph_today")
+        self.frame_graph_today.setFrameShape(QFrame.StyledPanel)
+        self.frame_graph_today.setFrameShadow(QFrame.Raised)
+        self.splitter.addWidget(self.frame_graph_today)
         self.frame_graph_ideal = QFrame(self.splitter)
         self.frame_graph_ideal.setObjectName(u"frame_graph_ideal")
         self.frame_graph_ideal.setFrameShape(QFrame.StyledPanel)
@@ -113,10 +113,10 @@ class Ui_idealAssetsEditor(object):
         self.btn_delete.setText(QCoreApplication.translate("idealAssetsEditor", u"Deletar", None))
         self.groupBox.setTitle(QCoreApplication.translate("idealAssetsEditor", u"Ativos ideais", None))
         ___qtablewidgetitem1 = self.tableWidget_ideal.verticalHeaderItem(0)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("idealAssetsEditor", u"M\u00ednimo", None));
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("idealAssetsEditor", u"M\u00ednimo [%]", None));
         ___qtablewidgetitem2 = self.tableWidget_ideal.verticalHeaderItem(1)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("idealAssetsEditor", u"Ideal", None));
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("idealAssetsEditor", u"Ideal [%]", None));
         ___qtablewidgetitem3 = self.tableWidget_ideal.verticalHeaderItem(2)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("idealAssetsEditor", u"M\u00e1ximo", None));
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("idealAssetsEditor", u"M\u00e1ximo [%]", None));
     # retranslateUi
 

@@ -62,17 +62,17 @@
         <widget class="QTableWidget" name="tableWidget_ideal">
          <row>
           <property name="text">
-           <string>Mínimo</string>
+           <string>Mínimo [%]</string>
           </property>
          </row>
          <row>
           <property name="text">
-           <string>Ideal</string>
+           <string>Ideal [%]</string>
           </property>
          </row>
          <row>
           <property name="text">
-           <string>Máximo</string>
+           <string>Máximo [%]</string>
           </property>
          </row>
         </widget>
@@ -95,7 +95,7 @@
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
-        <widget class="QFrame" name="frame_graph_tofay">
+        <widget class="QFrame" name="frame_graph_today">
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>

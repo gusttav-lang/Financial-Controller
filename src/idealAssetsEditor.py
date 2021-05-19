@@ -1,5 +1,5 @@
 # Qt:
-from PySide2.QtWidgets import QWidget, QTableWidgetItem
+from PySide2.QtWidgets import QWidget, QTableWidgetItem, QMessageBox, QVBoxLayout
 from PySide2.QtCore import Qt, QDate
 from src.ui.idealAssetsEditor_ui import Ui_idealAssetsEditor
 # DAO:
@@ -15,6 +15,8 @@ import datetime
 
 
 class IdealAssetsEditor(QWidget):
+    str_today_chart_title = "Distribuição de ativos atuais"
+    str_ideal_chart_title = "Distribuição de ativos ideais"
     def __init__(self, assets_in_dates_list, ideal_assets_list, asset_categories):
         super().__init__()
         self.ui = Ui_idealAssetsEditor()
@@ -25,20 +27,27 @@ class IdealAssetsEditor(QWidget):
         self.__ideal_assets_list = ideal_assets_list
         self.__asset_categories = asset_categories
 
-        self.setup_plot()
+        self.setup_plots()
 
         # load interface and connects:
         self.load_tables()
         self.make_connects()
 
-    def setup_plot(self):
-        pass
+    def setup_plots(self):
+        self.today_chart = CategoryPieChart(self.__asset_categories, self, IdealAssetsEditor.str_today_chart_title)
+        layout1 = QVBoxLayout(self.ui.frame_graph_today)        
+        layout1.addWidget(self.today_chart,1)
+        
+        self.ideal_chart = CategoryPieChart(self.__asset_categories, self, IdealAssetsEditor.str_ideal_chart_title)
+        layout2 = QVBoxLayout(self.ui.frame_graph_ideal)        
+        layout2.addWidget(self.ideal_chart,1)
 
     def make_connects(self):        
         self.ui.tableWidget_today.cellChanged.connect(self.today_cell_changed)
         self.ui.tableWidget_ideal.cellChanged.connect(self.ideal_cell_changed)
         self.ui.btn_add.clicked.connect(self.btn_add)
         self.ui.btn_delete.clicked.connect(self.btn_delete)
+        self.ui.tableWidget_today.cellClicked.connect(self.today_cell_clicked)
 
     def load_tables(self):
         self.load_today_table()
@@ -52,6 +61,11 @@ class IdealAssetsEditor(QWidget):
             if asset_in_month.category.name not in headers:  # check for categories that were added in the month and excluded after that
                 headers.append(asset_in_month.category.name) 
                 #self.__asset_categories.append(asset_in_month.category) # TODO: precisa disso? nao vai adicionar na lista de novo? verificar aqui e no spentInMOnthEditor
+
+        # Must update labels in chart since we can have a removed category:
+        headers_without_Dia = headers.copy()
+        headers_without_Dia.remove("Dia")
+        self.today_chart.update_category_labels(headers_without_Dia)
                 
         self.ui.tableWidget_today.setColumnCount(len(headers))
         ded = DateEditDelegate(self.ui.tableWidget_today)
@@ -77,6 +91,8 @@ class IdealAssetsEditor(QWidget):
 
         for asset_in_month in self.__assets_in_dates_list:
             self.add_asset_in_month_to_table(asset_in_month)
+
+        self.update_today_plot(0)
 
     def add_asset_in_month_to_table(self, asset_in_month : AssetsInMonth):
         # find de correct line:
@@ -116,11 +132,25 @@ class IdealAssetsEditor(QWidget):
         for ideal_asset in reversed(self.__ideal_assets_list):
             if ideal_asset.category not in self.__asset_categories:
                 self.__ideal_assets_list.remove(ideal_asset)
+                QMessageBox.warning(self, "Aviso", "A categoria '" + ideal_asset.category.name+ "' foi removida. Reveja seus ativos ideais!",
+                                        QMessageBox.Ok)
 
         # Complete the table. If item does not exist, create it:
-        # Fazer um find pela celula esperada ponto a ponto
-
-
+        for column, category_name in enumerate(headers):
+            exist_ideal_asset_for_category = False
+            for ideal_asset in self.__ideal_assets_list:
+                if ideal_asset.category.name == category_name:
+                    exist_ideal_asset_for_category = True
+                    self.ui.tableWidget_ideal.item(0, column).setData(Qt.DisplayRole, ideal_asset.min_value)
+                    self.ui.tableWidget_ideal.item(1, column).setData(Qt.DisplayRole, ideal_asset.ideal_value)
+                    self.ui.tableWidget_ideal.item(2, column).setData(Qt.DisplayRole, ideal_asset.max_value)
+                    break
+            if not exist_ideal_asset_for_category:
+                new_ideal_asset = IdealAssets()
+                new_ideal_asset.set_category(self.__asset_categories[column])
+                self.__ideal_assets_list.append(new_ideal_asset)
+        
+        self.update_ideal_plot()
 
     def today_cell_changed(self, row : int, column : int):
         if column == 0:
@@ -163,7 +193,17 @@ class IdealAssetsEditor(QWidget):
                         self.__assets_in_dates_list.append(asset_in_month)'''
 
     def ideal_cell_changed(self, row : int, column : int):
-        pass
+        # Find the correct ideal asset:
+        changed_category = self.__asset_categories[column]
+        for ideal_asset in self.__ideal_assets_list:
+            if ideal_asset.category == changed_category:
+                if row == 0:
+                    ideal_asset.set_min_value(self.ui.tableWidget_ideal.item(row, column).data(Qt.DisplayRole))
+                elif row == 1:
+                    ideal_asset.set_ideal_value(self.ui.tableWidget_ideal.item(row, column).data(Qt.DisplayRole))
+                    self.update_ideal_plot()
+                elif row == 2:
+                    ideal_asset.set_max_value(self.ui.tableWidget_ideal.item(row, column).data(Qt.DisplayRole))
 
     def btn_add(self):
         self.ui.tableWidget_today.insertRow(0)
@@ -192,3 +232,30 @@ class IdealAssetsEditor(QWidget):
                     self.__assets_in_dates_list.remove(asset_in_month)
 
             self.ui.tableWidget_today.removeRow(current_row)
+
+    def update_ideal_plot(self):
+        values_list = []
+        for asset_category in self.__asset_categories:
+            for ideal_asset in self.__ideal_assets_list:
+                if ideal_asset.category.name == asset_category.name:
+                    if ideal_asset.ideal_value == None:
+                        values_list.append(0)
+                    else:
+                        values_list.append(ideal_asset.ideal_value)
+        self.ideal_chart.plot(values_list)
+
+    def today_cell_clicked(self, row : int, column : int):
+        self.update_today_plot(row)
+
+    def update_today_plot(self, row = 0):
+        if self.ui.tableWidget_today.rowCount() > row:
+            date_str = self.ui.tableWidget_today.item(row, 0).data(Qt.DisplayRole).toPython().strftime("%d/%m/%Y")
+            self.today_chart.update_title(IdealAssetsEditor.str_today_chart_title + " - " + date_str)
+            values_list = []
+            for j in range(1, self.ui.tableWidget_today.columnCount()):
+                cell_value = self.ui.tableWidget_today.item(row, j).data(Qt.DisplayRole)
+                if cell_value == None:
+                    values_list.append(0)
+                else:
+                    values_list.append(cell_value)
+            self.today_chart.plot(values_list)
