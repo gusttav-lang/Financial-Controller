@@ -37,7 +37,7 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
 
         # UI Setup:
-        #self.setWindowState(Qt.WindowMaximized)
+        self.setWindowState(Qt.WindowMaximized)
         self.ui.dw_esquerdo.setTitleBarWidget(QWidget()) # esconder a barra
 
         #Internal vars:

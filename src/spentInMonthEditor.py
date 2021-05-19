@@ -49,6 +49,13 @@ class SpentInMonthEditor(QWidget):
         self.make_connects()
 
         self.ui.label.setText(gv.Meses[spent_in_month.month] + "/" + str(spent_in_month.year))
+        self.adjust_initial_sizes()
+
+    def adjust_initial_sizes(self):
+        """Set sizes for full HD monitor"""
+        self.ui.splitter_2.setSizes([90,200])
+        self.ui.splitter_5.setSizes([90,200])
+        self.ui.splitter.setSizes([5,350])
 
     def setup_plot(self):
         #if len(self.__spent_categories) > 0:
@@ -459,7 +466,18 @@ class SpentInMonthEditor(QWidget):
                     column = initial_column
                     for cell in line:
                         if column < column_count:
-                            current_widget.item(current_row, column).setData(Qt.DisplayRole, cell)
+                            if (column == 3):  # check if category exists
+                                is_in_spent_category = False
+                                correct_name = ""  # correct name with Upper cases
+                                for category in self.__spent_categories:
+                                    if cell.lower() == category.name.lower():
+                                        is_in_spent_category = True
+                                        correct_name = category.name
+                                        break
+                                if (is_in_spent_category):
+                                    current_widget.item(current_row, column).setData(Qt.DisplayRole, correct_name)
+                            else:
+                                current_widget.item(current_row, column).setData(Qt.DisplayRole, cell)
                         column += 1
 
                     current_row += 1
