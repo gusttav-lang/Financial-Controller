@@ -17,6 +17,7 @@ class Asset:
         self._applied_money = 1000.0
         self._objective = None # Objective()
         self._category = None # AssetCategory()
+        self._obs = ""
 
     def set_name(self, value : str) : self._name = value
     def set_broker(self, value : Broker) : self._broker = value
@@ -26,6 +27,7 @@ class Asset:
     def set_applied_money(self, value : float) : self._applied_money = value
     def set_objective(self, value : Objective) : self._objective = value
     def set_category(self, value : AssetCategory) : self._category = value
+    def set_obs(self, value : str) : self._obs = value
 
     @property
     def name(self):
@@ -58,3 +60,7 @@ class Asset:
     @property
     def category(self):
         return self._category
+
+    @property
+    def obs(self):
+        return self._obs

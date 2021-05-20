@@ -3,7 +3,7 @@ class GlobalVars:
     Class used to define strings and functions used in the whole project.
     """
     # Strings for treeWidgetItens name:
-    corretoras = "Corretoras"
+    corretoras = "Bancos/Corretoras"
     ativos = "Ativos"
     passivos = "Passivos"
     objetivos = "Objetivos"
@@ -14,6 +14,7 @@ class GlobalVars:
     categorias_ativos = "Categorias de ativos"
     gastos = "Gastos"
     alocacao_ideal = "Alocação ideal de ativos"
+    criterio_acoes = "Critérios para compra de ações"
 
     Meses = {
         1: "Janeiro",

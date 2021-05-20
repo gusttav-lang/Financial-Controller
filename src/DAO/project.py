@@ -1,3 +1,4 @@
+from dao.stockcriteria import StockCriteria
 from src.dao.broker import Broker
 from src.dao.asset import Asset
 from src.dao.liability import Liability
@@ -5,6 +6,7 @@ from src.dao.objective import Objective
 from src.dao.spentcategory import SpentCategory
 from src.dao.spentinmonth import  SpentInMonth
 from src.dao.spentlimitgoal import SpentLimitGoal
+from src.dao.stockcriteria import StockCriteria
 
 
 class Project:
@@ -23,3 +25,4 @@ class Project:
         self.year_predictions_list = [] # YearPredicitons
         self.assets_in_dates_list = []  # AssetsInMonth - used in Ideal Assets Editor
         self.ideal_assets_list = []  # Ideal Assets
+        self.stock_criteria = StockCriteria()

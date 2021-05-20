@@ -25,6 +25,7 @@ from src.spenteditor import SpentEditor
 from src.spentInYearEditor import SpentInYearEditor
 from src.assetCategoryEditor import AssetCategoryEditor
 from src.idealAssetsEditor import IdealAssetsEditor
+from src.stockCriteriaEditor import StockCriteriaEditor
 
 # Definition of strings:
 from src.globalvars import GlobalVars as gv
@@ -123,6 +124,9 @@ class MainWindow(QMainWindow):
                 
         tree_item_ideal = QTreeWidgetItem(self.ui.tw_esquerdo)
         tree_item_ideal.setText(0, gv.alocacao_ideal)
+                
+        tree_item_criterio_acoes = QTreeWidgetItem(self.ui.tw_esquerdo)
+        tree_item_criterio_acoes.setText(0, gv.criterio_acoes)
         
         tree_item_gastos = QTreeWidgetItem(self.ui.tw_esquerdo)
         tree_item_gastos.setText(0, gv.gastos)
@@ -267,3 +271,6 @@ class MainWindow(QMainWindow):
             elif (item.text(0) == gv.alocacao_ideal):
                 idealEdt = IdealAssetsEditor(self.__project.assets_in_dates_list, self.__project.ideal_assets_list, self.__project.asset_categories)
                 self.ui.sw_central.addWidget(idealEdt)
+            elif (item.text(0) == gv.criterio_acoes):
+                criteriaEdt = StockCriteriaEditor(self.__project.stock_criteria)
+                self.ui.sw_central.addWidget(criteriaEdt)

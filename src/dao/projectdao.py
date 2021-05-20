@@ -22,6 +22,7 @@ class ProjectDAO:
                 project.year_predictions_list = project_from_file.year_predictions_list
                 project.assets_in_dates_list = project_from_file.assets_in_dates_list
                 project.ideal_assets_list = project_from_file.ideal_assets_list
+                project.stock_criteria = project_from_file.stock_criteria
             return True
         except :
             return False

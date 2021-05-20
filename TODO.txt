@@ -1,3 +1,4 @@
 no spent in year, mostrar valor absoluto no grafico
-fazer criterios de ações em janela separada? colocar número de ações e setores?
 adicionar coluna especifica para reserva de emergencia nos ativos ideias?
+adicionar texto padrao ao cadastrar ativos falando oq se deve escrever ao comprar uma ação
+colocar spliter em todas as interfaces

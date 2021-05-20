@@ -17,7 +17,7 @@ class Ui_spentInMonthEditor(object):
     def setupUi(self, spentInMonthEditor):
         if not spentInMonthEditor.objectName():
             spentInMonthEditor.setObjectName(u"spentInMonthEditor")
-        spentInMonthEditor.resize(1122, 846)
+        spentInMonthEditor.resize(1161, 888)
         self.verticalLayout = QVBoxLayout(spentInMonthEditor)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.label = QLabel(spentInMonthEditor)

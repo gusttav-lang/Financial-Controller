@@ -32,6 +32,25 @@ class AssetsEditor(QWidget):
             self.ui.lw_assets_list.setCurrentRow(-1) # corrects a bug for when there is only 1 item in the list
             self.ui.lw_assets_list.setCurrentRow(0)
 
+        # Write PlaceHolder here to break lines
+        self.ui.plainTextEdit_obs.setPlaceholderText("Para ações:\n"
+                                                     +"- Escrever tese de compra, o porquê a empresa deve valorizar;\n"
+                                                     +"- Escrever indicadores no momento da compra;\n"
+                                                     +"- Escrever sobre vantagem competitiva da empresa;\n"
+                                                     +"- Escrever o valuation feito;\n"
+                                                     +"- Escrever o que pode dar errado;\n"
+                                                     +"- Escrever motivos para venda;\n"
+                                                     +"- Escrever sobre empresas concorrentes e mais ideias de Porter;\n"
+                                                     +"- Escrever em qual categoria de Lynch a empresa está;\n"
+                                                     +"- Escrever sobre as dimensões de Fisher aplicadas a empresa;\n"
+                                                     +"- Escrever em qual fase da vida a empresa está (pg. 230 Lynch);\n"
+                                                     +"- Escrever como a empresa está aumentando os lucros:\n"
+                                                     +"\t1) Reduzindo custos;\n"
+                                                     +"\t2) Aumentando preços;\n"
+                                                     +"\t3) Expandindo-se em novos mercados;\n"
+                                                     +"\t4) Vendendo mais produtos em antigos mercados e revitalizando;\n"
+                                                     +"\t5) Vendendo ou dispondo de outra forma de operações que produzam perdas;")
+
     def enable_widgets(self):
         if (self.ui.lw_assets_list.count() == 0):
             self.ui.btn_delete.setEnabled(False)
@@ -43,6 +62,7 @@ class AssetsEditor(QWidget):
             self.ui.lineEdit_applied_money.setEnabled(False)
             self.ui.comboBox_objectives.setEnabled(False)
             self.ui.comboBox_categories.setEnabled(False)
+            self.ui.plainTextEdit_obs.setEnabled(False)
         else:            
             self.ui.btn_delete.setEnabled(True)
             self.ui.lineEdit_Name.setEnabled(True)
@@ -53,6 +73,7 @@ class AssetsEditor(QWidget):
             self.ui.lineEdit_applied_money.setEnabled(True)
             self.ui.comboBox_objectives.setEnabled(True)
             self.ui.comboBox_categories.setEnabled(True)
+            self.ui.plainTextEdit_obs.setEnabled(True)
 
     def make_connects(self):
         self.ui.btn_add.clicked.connect(self.add_asset)
@@ -67,6 +88,10 @@ class AssetsEditor(QWidget):
         self.ui.lineEdit_applied_money.textChanged.connect(lambda x: self.__assets[self.ui.lw_assets_list.currentRow()].set_applied_money(float(x)))
         self.ui.comboBox_objectives.currentIndexChanged.connect(lambda x: self.__assets[self.ui.lw_assets_list.currentRow()].set_objective(self.__objectives[x]))
         self.ui.comboBox_categories.currentIndexChanged.connect(lambda x: self.__assets[self.ui.lw_assets_list.currentRow()].set_category(self.__categories[x]))
+        self.ui.plainTextEdit_obs.textChanged.connect(self.obs_changed)
+
+    def obs_changed(self):
+        self.__assets[self.ui.lw_assets_list.currentRow()].set_obs(self.ui.plainTextEdit_obs.toPlainText())
 
     def name_changed(self, new_text):
         """Updates de lw_assets ListWidgetItem text"""
@@ -128,6 +153,7 @@ class AssetsEditor(QWidget):
             self.ui.lineEdit_applied_money.setText(str(self.__assets[row].applied_money))
             self.ui.comboBox_objectives.setCurrentIndex(self.get_objective_index(self.__assets[row].objective))
             self.ui.comboBox_categories.setCurrentIndex(self.get_category_index(self.__assets[row].category))
+            self.ui.plainTextEdit_obs.setPlainText(self.__assets[row].obs)
 
     def load_comboboxes_itens(self):
         for broker in self.__brokers:
