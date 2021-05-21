@@ -1,0 +1,1 @@
+criar validadores de double para line edits

@@ -1,0 +1,13 @@
+Escrevi este documento ao longo do grupo de estudo de ações do Bona(06/20-02/21). Talvez algumas ideias ja não façam mais sentido
+
+-cadastrar compras e mostrar proximos vencimentos em um lugar pequeno na direita
+
+-mostrar objetivos que estão chegando a data
+
+-avaliar dinheiro aplicado por todos os setores
+
+-avaliar dinheiro aplicado com base do dinheiro presente na economia (M0, M1, M2, ...)
+
+-Escrever a história de dois minutos explicando porque estou interessado na empresa e o que precisa ocorrer pra ela ser bem sucedida
+
+-quantificar qualidade da gestão: ver onde caixa está aplicado; comparar dívida atual com o nível ótimo de dívida; não faz contabilidade criativa;
