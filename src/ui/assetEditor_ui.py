@@ -167,6 +167,6 @@ class Ui_assetsEditor(object):
         self.label_7.setText(QCoreApplication.translate("assetsEditor", u"Objetivo:", None))
         self.label_8.setText(QCoreApplication.translate("assetsEditor", u"Categoria:", None))
         self.label_9.setText(QCoreApplication.translate("assetsEditor", u"Obeserva\u00e7\u00f5es:", None))
-        self.plainTextEdit_obs.setPlaceholderText(QCoreApplication.translate("assetsEditor", u"Para a\u00e7\u00f5es: \\n 1", None))
+        self.plainTextEdit_obs.setPlaceholderText(QCoreApplication.translate("assetsEditor", u"PlaceHolder escrito no c\u00f3dgo para aceitar quebra de linha", None))
     # retranslateUi
 

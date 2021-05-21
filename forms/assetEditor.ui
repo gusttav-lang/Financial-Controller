@@ -136,7 +136,7 @@
        <item row="8" column="1">
         <widget class="QPlainTextEdit" name="plainTextEdit_obs">
          <property name="placeholderText">
-          <string>Para ações: \n 1</string>
+          <string>PlaceHolder escrito no códgo para aceitar quebra de linha</string>
          </property>
         </widget>
        </item>

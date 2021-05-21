@@ -18,23 +18,29 @@ class Ui_liabilitiesEditor(object):
         if not liabilitiesEditor.objectName():
             liabilitiesEditor.setObjectName(u"liabilitiesEditor")
         liabilitiesEditor.resize(768, 554)
-        self.horizontalLayout_2 = QHBoxLayout(liabilitiesEditor)
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.verticalLayout = QVBoxLayout()
+        self.gridLayout = QGridLayout(liabilitiesEditor)
+        self.gridLayout.setObjectName(u"gridLayout")
+        self.splitter = QSplitter(liabilitiesEditor)
+        self.splitter.setObjectName(u"splitter")
+        self.splitter.setOrientation(Qt.Horizontal)
+        self.widget = QWidget(self.splitter)
+        self.widget.setObjectName(u"widget")
+        self.verticalLayout = QVBoxLayout(self.widget)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.lw_liabilities_list = QListWidget(liabilitiesEditor)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.lw_liabilities_list = QListWidget(self.widget)
         self.lw_liabilities_list.setObjectName(u"lw_liabilities_list")
 
         self.verticalLayout.addWidget(self.lw_liabilities_list)
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.btn_add = QPushButton(liabilitiesEditor)
+        self.btn_add = QPushButton(self.widget)
         self.btn_add.setObjectName(u"btn_add")
 
         self.horizontalLayout.addWidget(self.btn_add)
 
-        self.btn_delete = QPushButton(liabilitiesEditor)
+        self.btn_delete = QPushButton(self.widget)
         self.btn_delete.setObjectName(u"btn_delete")
 
         self.horizontalLayout.addWidget(self.btn_delete)
@@ -42,73 +48,75 @@ class Ui_liabilitiesEditor(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout)
 
-
-        self.horizontalLayout_2.addLayout(self.verticalLayout)
-
-        self.formLayout = QFormLayout()
+        self.splitter.addWidget(self.widget)
+        self.widget1 = QWidget(self.splitter)
+        self.widget1.setObjectName(u"widget1")
+        self.formLayout = QFormLayout(self.widget1)
         self.formLayout.setObjectName(u"formLayout")
-        self.label = QLabel(liabilitiesEditor)
+        self.formLayout.setContentsMargins(0, 0, 0, 0)
+        self.label = QLabel(self.widget1)
         self.label.setObjectName(u"label")
 
         self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label)
 
-        self.lineEdit_Name = QLineEdit(liabilitiesEditor)
+        self.lineEdit_Name = QLineEdit(self.widget1)
         self.lineEdit_Name.setObjectName(u"lineEdit_Name")
 
         self.formLayout.setWidget(0, QFormLayout.FieldRole, self.lineEdit_Name)
 
-        self.label_2 = QLabel(liabilitiesEditor)
+        self.label_2 = QLabel(self.widget1)
         self.label_2.setObjectName(u"label_2")
 
         self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_2)
 
-        self.comboBox_brokers = QComboBox(liabilitiesEditor)
+        self.comboBox_brokers = QComboBox(self.widget1)
         self.comboBox_brokers.setObjectName(u"comboBox_brokers")
 
         self.formLayout.setWidget(1, QFormLayout.FieldRole, self.comboBox_brokers)
 
-        self.label_4 = QLabel(liabilitiesEditor)
+        self.label_4 = QLabel(self.widget1)
         self.label_4.setObjectName(u"label_4")
 
         self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_4)
 
-        self.dateEdit_purchase_day = QDateEdit(liabilitiesEditor)
+        self.dateEdit_purchase_day = QDateEdit(self.widget1)
         self.dateEdit_purchase_day.setObjectName(u"dateEdit_purchase_day")
 
         self.formLayout.setWidget(2, QFormLayout.FieldRole, self.dateEdit_purchase_day)
 
-        self.label_3 = QLabel(liabilitiesEditor)
+        self.label_3 = QLabel(self.widget1)
         self.label_3.setObjectName(u"label_3")
 
         self.formLayout.setWidget(3, QFormLayout.LabelRole, self.label_3)
 
-        self.dateEdit_expiration_day = QDateEdit(liabilitiesEditor)
+        self.dateEdit_expiration_day = QDateEdit(self.widget1)
         self.dateEdit_expiration_day.setObjectName(u"dateEdit_expiration_day")
 
         self.formLayout.setWidget(3, QFormLayout.FieldRole, self.dateEdit_expiration_day)
 
-        self.label_5 = QLabel(liabilitiesEditor)
+        self.label_5 = QLabel(self.widget1)
         self.label_5.setObjectName(u"label_5")
 
         self.formLayout.setWidget(4, QFormLayout.LabelRole, self.label_5)
 
-        self.lineEdit_interest = QLineEdit(liabilitiesEditor)
+        self.lineEdit_interest = QLineEdit(self.widget1)
         self.lineEdit_interest.setObjectName(u"lineEdit_interest")
 
         self.formLayout.setWidget(4, QFormLayout.FieldRole, self.lineEdit_interest)
 
-        self.label_6 = QLabel(liabilitiesEditor)
+        self.label_6 = QLabel(self.widget1)
         self.label_6.setObjectName(u"label_6")
 
         self.formLayout.setWidget(5, QFormLayout.LabelRole, self.label_6)
 
-        self.lineEdit_borrowed_money = QLineEdit(liabilitiesEditor)
+        self.lineEdit_borrowed_money = QLineEdit(self.widget1)
         self.lineEdit_borrowed_money.setObjectName(u"lineEdit_borrowed_money")
 
         self.formLayout.setWidget(5, QFormLayout.FieldRole, self.lineEdit_borrowed_money)
 
+        self.splitter.addWidget(self.widget1)
 
-        self.horizontalLayout_2.addLayout(self.formLayout)
+        self.gridLayout.addWidget(self.splitter, 0, 0, 1, 1)
 
 
         self.retranslateUi(liabilitiesEditor)

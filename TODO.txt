@@ -1,4 +1,2 @@
 no spent in year, mostrar valor absoluto no grafico
 adicionar coluna especifica para reserva de emergencia nos ativos ideias?
-adicionar texto padrao ao cadastrar ativos falando oq se deve escrever ao comprar uma ação
-colocar spliter em todas as interfaces

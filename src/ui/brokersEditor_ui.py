@@ -17,24 +17,30 @@ class Ui_brokersEditor(object):
     def setupUi(self, brokersEditor):
         if not brokersEditor.objectName():
             brokersEditor.setObjectName(u"brokersEditor")
-        brokersEditor.resize(768, 554)
-        self.horizontalLayout_2 = QHBoxLayout(brokersEditor)
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.verticalLayout = QVBoxLayout()
+        brokersEditor.resize(768, 572)
+        self.gridLayout = QGridLayout(brokersEditor)
+        self.gridLayout.setObjectName(u"gridLayout")
+        self.splitter = QSplitter(brokersEditor)
+        self.splitter.setObjectName(u"splitter")
+        self.splitter.setOrientation(Qt.Horizontal)
+        self.widget = QWidget(self.splitter)
+        self.widget.setObjectName(u"widget")
+        self.verticalLayout = QVBoxLayout(self.widget)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.lw_brokers_list = QListWidget(brokersEditor)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.lw_brokers_list = QListWidget(self.widget)
         self.lw_brokers_list.setObjectName(u"lw_brokers_list")
 
         self.verticalLayout.addWidget(self.lw_brokers_list)
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.btn_add = QPushButton(brokersEditor)
+        self.btn_add = QPushButton(self.widget)
         self.btn_add.setObjectName(u"btn_add")
 
         self.horizontalLayout.addWidget(self.btn_add)
 
-        self.btn_delete = QPushButton(brokersEditor)
+        self.btn_delete = QPushButton(self.widget)
         self.btn_delete.setObjectName(u"btn_delete")
 
         self.horizontalLayout.addWidget(self.btn_delete)
@@ -42,43 +48,45 @@ class Ui_brokersEditor(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout)
 
-
-        self.horizontalLayout_2.addLayout(self.verticalLayout)
-
-        self.formLayout = QFormLayout()
+        self.splitter.addWidget(self.widget)
+        self.widget1 = QWidget(self.splitter)
+        self.widget1.setObjectName(u"widget1")
+        self.formLayout = QFormLayout(self.widget1)
         self.formLayout.setObjectName(u"formLayout")
-        self.label = QLabel(brokersEditor)
+        self.formLayout.setContentsMargins(0, 0, 0, 0)
+        self.label = QLabel(self.widget1)
         self.label.setObjectName(u"label")
 
         self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label)
 
-        self.lineEdit_Name = QLineEdit(brokersEditor)
+        self.lineEdit_Name = QLineEdit(self.widget1)
         self.lineEdit_Name.setObjectName(u"lineEdit_Name")
 
         self.formLayout.setWidget(0, QFormLayout.FieldRole, self.lineEdit_Name)
 
-        self.label_2 = QLabel(brokersEditor)
+        self.label_2 = QLabel(self.widget1)
         self.label_2.setObjectName(u"label_2")
 
         self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_2)
 
-        self.lineEdit_bank_number = QLineEdit(brokersEditor)
+        self.lineEdit_bank_number = QLineEdit(self.widget1)
         self.lineEdit_bank_number.setObjectName(u"lineEdit_bank_number")
 
         self.formLayout.setWidget(1, QFormLayout.FieldRole, self.lineEdit_bank_number)
 
-        self.label_3 = QLabel(brokersEditor)
+        self.label_3 = QLabel(self.widget1)
         self.label_3.setObjectName(u"label_3")
 
         self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_3)
 
-        self.plainTextEdit_description = QPlainTextEdit(brokersEditor)
+        self.plainTextEdit_description = QPlainTextEdit(self.widget1)
         self.plainTextEdit_description.setObjectName(u"plainTextEdit_description")
 
         self.formLayout.setWidget(2, QFormLayout.FieldRole, self.plainTextEdit_description)
 
+        self.splitter.addWidget(self.widget1)
 
-        self.horizontalLayout_2.addLayout(self.formLayout)
+        self.gridLayout.addWidget(self.splitter, 0, 0, 1, 1)
 
 
         self.retranslateUi(brokersEditor)
