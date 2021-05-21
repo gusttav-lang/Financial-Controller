@@ -1,2 +1,1 @@
-no spent in year, mostrar valor absoluto no grafico
 criar validadores de double para line edits

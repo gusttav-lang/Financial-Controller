@@ -44,7 +44,7 @@ class SpentInYearEditor(QWidget):
                         if fixed_spent.category == category:
                             sum += fixed_spent.how_much
             sum_list_for_chart.append(sum)
-        chart.plot(sum_list_for_chart)
+        chart.plot(sum_list_for_chart, True)
 
     def make_connects(self):        
         self.ui.tableWidget_earnings.cellChanged.connect(self.earnings_cell_changed)
