@@ -1,6 +1,7 @@
 # Qt:
-from PySide2.QtWidgets import QWidget, QTableWidgetItem, QMessageBox, QVBoxLayout
-from PySide2.QtCore import Qt, QDate
+from PySide2.QtWidgets import QApplication, QWidget, QTableWidgetItem, QMessageBox, QVBoxLayout
+from PySide2.QtCore import Qt, QDate, QLocale
+from PySide2.QtGui import QDoubleValidator
 from src.ui.idealAssetsEditor_ui import Ui_idealAssetsEditor
 # DAO:
 from src.dao.assetsinmonth import AssetsInMonth
@@ -17,7 +18,7 @@ import datetime
 class IdealAssetsEditor(QWidget):
     str_today_chart_title = "Distribuição de ativos atuais"
     str_ideal_chart_title = "Distribuição de ativos ideais"
-    def __init__(self, assets_in_dates_list, ideal_assets_list, asset_categories):
+    def __init__(self, assets_in_dates_list, ideal_assets_list, asset_categories, emergency_reserves):
         super().__init__()
         self.ui = Ui_idealAssetsEditor()
         self.ui.setupUi(self)
@@ -26,12 +27,32 @@ class IdealAssetsEditor(QWidget):
         self.__assets_in_dates_list = assets_in_dates_list
         self.__ideal_assets_list = ideal_assets_list
         self.__asset_categories = asset_categories
+        self.__emergency_reserves = emergency_reserves
 
         self.setup_plots()
 
         # load interface and connects:
         self.load_tables()
+        self.load_lineedits_with_validators()
         self.make_connects()
+
+    def load_lineedits_with_validators(self):
+        self.ui.lineEdit_reserva_atual.setText(str(self.__emergency_reserves.current_value))
+        self.ui.lineEdit_reserva_ideal.setText(str(self.__emergency_reserves.ideal_value))
+        ''' I've commented this code, since no other place uses validators (except inbuild table delegate validator)
+        double_validator = QDoubleValidator()
+        double_validator.setDecimals(2)
+        double_validator.setNotation(QDoubleValidator.StandardNotation)  # Remove scientific notation
+        current_locale = QLocale.system()
+        #locale.setDefault
+        double_validator.setLocale(current_locale)
+        self.ui.lineEdit_reserva_atual.setValidator(double_validator)
+        self.ui.lineEdit_reserva_ideal.setValidator(double_validator)'''
+        
+        if self.ui.lineEdit_reserva_atual.text() == 'None':
+            self.ui.lineEdit_reserva_atual.setText("")
+        if self.ui.lineEdit_reserva_ideal.text() == 'None':
+            self.ui.lineEdit_reserva_ideal.setText("")
 
     def setup_plots(self):
         self.today_chart = CategoryPieChart(self.__asset_categories, self, IdealAssetsEditor.str_today_chart_title)
@@ -48,6 +69,8 @@ class IdealAssetsEditor(QWidget):
         self.ui.btn_add.clicked.connect(self.btn_add)
         self.ui.btn_delete.clicked.connect(self.btn_delete)
         self.ui.tableWidget_today.cellClicked.connect(self.today_cell_clicked)
+        self.ui.lineEdit_reserva_atual.textChanged.connect(lambda x: self.__emergency_reserves.set_current_value(x))
+        self.ui.lineEdit_reserva_ideal.textChanged.connect(lambda x: self.__emergency_reserves.set_ideal_value(x))
 
     def load_tables(self):
         self.load_today_table()

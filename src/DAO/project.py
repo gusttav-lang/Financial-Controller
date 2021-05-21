@@ -7,6 +7,7 @@ from src.dao.spentcategory import SpentCategory
 from src.dao.spentinmonth import  SpentInMonth
 from src.dao.spentlimitgoal import SpentLimitGoal
 from src.dao.stockcriteria import StockCriteria
+from src.dao.emergencyreserveforidealassets import EmergencyReserveForIdealAssets
 
 
 class Project:
@@ -26,3 +27,4 @@ class Project:
         self.assets_in_dates_list = []  # AssetsInMonth - used in Ideal Assets Editor
         self.ideal_assets_list = []  # Ideal Assets
         self.stock_criteria = StockCriteria()
+        self.emergency_reserver_for_ideal_assets = EmergencyReserveForIdealAssets()

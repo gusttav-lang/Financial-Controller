@@ -51,11 +51,26 @@ class Ui_idealAssetsEditor(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout)
 
+        self.formLayout = QFormLayout()
+        self.formLayout.setObjectName(u"formLayout")
+        self.label = QLabel(self.grouBox)
+        self.label.setObjectName(u"label")
+
+        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label)
+
+        self.lineEdit_reserva_atual = QLineEdit(self.grouBox)
+        self.lineEdit_reserva_atual.setObjectName(u"lineEdit_reserva_atual")
+
+        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.lineEdit_reserva_atual)
+
+
+        self.verticalLayout.addLayout(self.formLayout)
+
         self.splitter_2.addWidget(self.grouBox)
         self.groupBox = QGroupBox(self.splitter_2)
         self.groupBox.setObjectName(u"groupBox")
-        self.gridLayout = QGridLayout(self.groupBox)
-        self.gridLayout.setObjectName(u"gridLayout")
+        self.verticalLayout_3 = QVBoxLayout(self.groupBox)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.tableWidget_ideal = QTableWidget(self.groupBox)
         if (self.tableWidget_ideal.rowCount() < 3):
             self.tableWidget_ideal.setRowCount(3)
@@ -67,7 +82,22 @@ class Ui_idealAssetsEditor(object):
         self.tableWidget_ideal.setVerticalHeaderItem(2, __qtablewidgetitem3)
         self.tableWidget_ideal.setObjectName(u"tableWidget_ideal")
 
-        self.gridLayout.addWidget(self.tableWidget_ideal, 0, 0, 1, 1)
+        self.verticalLayout_3.addWidget(self.tableWidget_ideal)
+
+        self.formLayout_2 = QFormLayout()
+        self.formLayout_2.setObjectName(u"formLayout_2")
+        self.label_2 = QLabel(self.groupBox)
+        self.label_2.setObjectName(u"label_2")
+
+        self.formLayout_2.setWidget(0, QFormLayout.LabelRole, self.label_2)
+
+        self.lineEdit_reserva_ideal = QLineEdit(self.groupBox)
+        self.lineEdit_reserva_ideal.setObjectName(u"lineEdit_reserva_ideal")
+
+        self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.lineEdit_reserva_ideal)
+
+
+        self.verticalLayout_3.addLayout(self.formLayout_2)
 
         self.splitter_2.addWidget(self.groupBox)
 
@@ -111,6 +141,10 @@ class Ui_idealAssetsEditor(object):
         ___qtablewidgetitem.setText(QCoreApplication.translate("idealAssetsEditor", u"Dia", None));
         self.btn_add.setText(QCoreApplication.translate("idealAssetsEditor", u"Adicionar", None))
         self.btn_delete.setText(QCoreApplication.translate("idealAssetsEditor", u"Deletar", None))
+#if QT_CONFIG(tooltip)
+        self.label.setToolTip(QCoreApplication.translate("idealAssetsEditor", u"Descontar esse valor do montante em renda fixa", None))
+#endif // QT_CONFIG(tooltip)
+        self.label.setText(QCoreApplication.translate("idealAssetsEditor", u"Valor em reserva de emerg\u00eancia:", None))
         self.groupBox.setTitle(QCoreApplication.translate("idealAssetsEditor", u"Ativos ideais", None))
         ___qtablewidgetitem1 = self.tableWidget_ideal.verticalHeaderItem(0)
         ___qtablewidgetitem1.setText(QCoreApplication.translate("idealAssetsEditor", u"M\u00ednimo [%]", None));
@@ -118,5 +152,6 @@ class Ui_idealAssetsEditor(object):
         ___qtablewidgetitem2.setText(QCoreApplication.translate("idealAssetsEditor", u"Ideal [%]", None));
         ___qtablewidgetitem3 = self.tableWidget_ideal.verticalHeaderItem(2)
         ___qtablewidgetitem3.setText(QCoreApplication.translate("idealAssetsEditor", u"M\u00e1ximo [%]", None));
+        self.label_2.setText(QCoreApplication.translate("idealAssetsEditor", u"Valor em reserva de emerg\u00eancia:", None))
     # retranslateUi
 

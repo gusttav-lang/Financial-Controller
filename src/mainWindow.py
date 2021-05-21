@@ -269,7 +269,7 @@ class MainWindow(QMainWindow):
                 spentYearEdt = SpentInYearEditor(item.year_predictions, self.__project.spent_in_month, self.__project.spent_categories)
                 self.ui.sw_central.addWidget(spentYearEdt)
             elif (item.text(0) == gv.alocacao_ideal):
-                idealEdt = IdealAssetsEditor(self.__project.assets_in_dates_list, self.__project.ideal_assets_list, self.__project.asset_categories)
+                idealEdt = IdealAssetsEditor(self.__project.assets_in_dates_list, self.__project.ideal_assets_list, self.__project.asset_categories, self.__project.emergency_reserver_for_ideal_assets)
                 self.ui.sw_central.addWidget(idealEdt)
             elif (item.text(0) == gv.criterio_acoes):
                 criteriaEdt = StockCriteriaEditor(self.__project.stock_criteria)

@@ -23,6 +23,7 @@ class ProjectDAO:
                 project.assets_in_dates_list = project_from_file.assets_in_dates_list
                 project.ideal_assets_list = project_from_file.ideal_assets_list
                 project.stock_criteria = project_from_file.stock_criteria
+                project.emergency_reserver_for_ideal_assets = project_from_file.emergency_reserver_for_ideal_assets                
             return True
         except :
             return False

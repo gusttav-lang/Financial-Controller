@@ -1,2 +1,2 @@
 no spent in year, mostrar valor absoluto no grafico
-adicionar coluna especifica para reserva de emergencia nos ativos ideias?
+criar validadores de double para line edits
