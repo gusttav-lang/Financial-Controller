@@ -56,7 +56,15 @@ class SpentLimitGoalEditor(QWidget):
             twi_amount = QTableWidgetItem()
             twi_amount.setData(Qt.DisplayRole, spent_limit.amount)
             self.ui.tableWidget.setItem(initial_row_count, 1, twi_amount)
+        self.update_sum()
     
     def cell_changed(self, row : int, column : int):
         if (column == 1):
             self.__standard_spent_limit[row].set_amount(float(self.ui.tableWidget.item(row, column).data(Qt.DisplayRole)))
+        self.update_sum()
+
+    def update_sum(self):
+        spent_sum = 0
+        for spent_limit in self.__standard_spent_limit:
+            spent_sum += spent_limit.amount
+        self.ui.label_sum.setText(str(spent_sum))

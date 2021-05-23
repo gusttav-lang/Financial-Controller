@@ -18,8 +18,8 @@ class Ui_spentLimitGoalEditor(object):
         if not spentLimitGoalEditor.objectName():
             spentLimitGoalEditor.setObjectName(u"spentLimitGoalEditor")
         spentLimitGoalEditor.resize(400, 300)
-        self.gridLayout = QGridLayout(spentLimitGoalEditor)
-        self.gridLayout.setObjectName(u"gridLayout")
+        self.verticalLayout = QVBoxLayout(spentLimitGoalEditor)
+        self.verticalLayout.setObjectName(u"verticalLayout")
         self.tableWidget = QTableWidget(spentLimitGoalEditor)
         if (self.tableWidget.columnCount() < 2):
             self.tableWidget.setColumnCount(2)
@@ -29,7 +29,31 @@ class Ui_spentLimitGoalEditor(object):
         self.tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem1)
         self.tableWidget.setObjectName(u"tableWidget")
 
-        self.gridLayout.addWidget(self.tableWidget, 0, 0, 1, 1)
+        self.verticalLayout.addWidget(self.tableWidget)
+
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.label = QLabel(spentLimitGoalEditor)
+        self.label.setObjectName(u"label")
+        font = QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label.setFont(font)
+
+        self.horizontalLayout.addWidget(self.label)
+
+        self.label_sum = QLabel(spentLimitGoalEditor)
+        self.label_sum.setObjectName(u"label_sum")
+        self.label_sum.setFont(font)
+
+        self.horizontalLayout.addWidget(self.label_sum)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout.addItem(self.horizontalSpacer)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout)
 
 
         self.retranslateUi(spentLimitGoalEditor)
@@ -43,5 +67,7 @@ class Ui_spentLimitGoalEditor(object):
         ___qtablewidgetitem.setText(QCoreApplication.translate("spentLimitGoalEditor", u"Categoria", None));
         ___qtablewidgetitem1 = self.tableWidget.horizontalHeaderItem(1)
         ___qtablewidgetitem1.setText(QCoreApplication.translate("spentLimitGoalEditor", u"Meta Teto [R$]", None));
+        self.label.setText(QCoreApplication.translate("spentLimitGoalEditor", u"Soma:", None))
+        self.label_sum.setText("")
     # retranslateUi
 

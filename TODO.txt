@@ -1,1 +1,8 @@
 criar validadores de double para line edits
+Pesquisar como colocar números na parte mais externa do gráfico. label se pa tbm
+bugs:
+-falta deletar teto de gastos que foram excluidos. esta gerando duplicidades
+-rever taborder de todas as interfaces
+-mudar numero da conta da corretora para str? acho que nao, pode quebrar o beriguidian
+
+fazer sobre

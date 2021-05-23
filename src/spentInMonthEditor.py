@@ -141,6 +141,8 @@ class SpentInMonthEditor(QWidget):
             self.ui.tableWidget_income.setItem(current_row, 2, twi_how_day)
             current_row += 1
 
+        self.update_income_sum()
+
     def load_spent_table(self):
         if (len(self.__spent_in_month.spent_list) < 50):
             number_of_line = 50
@@ -272,19 +274,20 @@ class SpentInMonthEditor(QWidget):
         row = 0
         sum_list_for_chart = []
         for category in self.__spent_categories:
-            sum = 0.0
+            sum_category = 0.0
             for fixed_spent in self.__spent_in_month.fixed_spent:
                 if fixed_spent.category == category:
                     if (fixed_spent.how_much != None):
-                        sum += fixed_spent.how_much
+                        sum_category += fixed_spent.how_much
             for spent in self.__spent_in_month.spent_list:
                 if spent.category == category:
                     if (spent.how_much != None):
-                        sum += spent.how_much
-            self.ui.tableWidget_sum.item(row, 1).setData(Qt.DisplayRole, sum)
+                        sum_category += spent.how_much
+            self.ui.tableWidget_sum.item(row, 1).setData(Qt.DisplayRole, sum_category)
             row += 1
-            sum_list_for_chart.append(sum)
+            sum_list_for_chart.append(sum_category)
         self.chart.plot(sum_list_for_chart)
+        self.ui.lalbel_sum_spent.setText(str(round(sum(sum_list_for_chart), 2)))
     
     def check_new_categories_for_spent_limit(self):
         #first, check if any category was excluded:
@@ -324,7 +327,15 @@ class SpentInMonthEditor(QWidget):
             self.__spent_in_month.revenue_forecast[row].set_how_much(self.ui.tableWidget_income.item(row, column).data(Qt.DisplayRole))
         if (column == 2):
             self.__spent_in_month.revenue_forecast[row].set_day_in_month(self.ui.tableWidget_income.item(row, column).data(Qt.DisplayRole))
-    
+        self.update_income_sum()
+
+    def update_income_sum(self):
+        income_sum = 0
+        for income in self.__spent_in_month.revenue_forecast:
+            if income.how_much != None:
+                income_sum += income.how_much
+        self.ui.label_sum_earnings.setText(str(round(income_sum, 2)))
+
     def spent_cell_changed(self, row : int, column : int):
         if (column == 0):
             self.__spent_in_month.spent_list[row].set_day(self.ui.tableWidget_spent.item(row, column).data(Qt.DisplayRole), self.__spent_in_month.month, self.__spent_in_month.year)            
@@ -399,6 +410,8 @@ class SpentInMonthEditor(QWidget):
 
     def keyPressEvent(self, event : QKeyEvent):
         super().keyPressEvent(event)
+
+        QApplication.setOverrideCursor(Qt.WaitCursor)  # change cursor
 
         # Delete Key:
         if (event.key() == Qt.Key_Delete):
@@ -490,6 +503,7 @@ class SpentInMonthEditor(QWidget):
                     current_widget == self.ui.tableWidget_spent):
                 self.add_one_empty_lines(current_widget)
 
+        QApplication.restoreOverrideCursor()  # restores cursor
 
     def add_one_empty_lines(self, table : QWidget):
         # add line to 'table' and create item in dao list, if needed

@@ -66,10 +66,8 @@ class Ui_spentInMonthEditor(object):
         self.splitter_3.addWidget(self.groupBox)
         self.groupBox_2 = QGroupBox(self.splitter_3)
         self.groupBox_2.setObjectName(u"groupBox_2")
-        self.gridLayout_2 = QGridLayout(self.groupBox_2)
-        self.gridLayout_2.setSpacing(0)
-        self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.gridLayout_2.setContentsMargins(3, 0, 3, 0)
+        self.verticalLayout_3 = QVBoxLayout(self.groupBox_2)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.tableWidget_income = QTableWidget(self.groupBox_2)
         if (self.tableWidget_income.columnCount() < 3):
             self.tableWidget_income.setColumnCount(3)
@@ -81,7 +79,31 @@ class Ui_spentInMonthEditor(object):
         self.tableWidget_income.setHorizontalHeaderItem(2, __qtablewidgetitem6)
         self.tableWidget_income.setObjectName(u"tableWidget_income")
 
-        self.gridLayout_2.addWidget(self.tableWidget_income, 0, 0, 1, 1)
+        self.verticalLayout_3.addWidget(self.tableWidget_income)
+
+        self.horizontalLayout_3 = QHBoxLayout()
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.label_3 = QLabel(self.groupBox_2)
+        self.label_3.setObjectName(u"label_3")
+        font1 = QFont()
+        font1.setBold(True)
+        font1.setWeight(75)
+        self.label_3.setFont(font1)
+
+        self.horizontalLayout_3.addWidget(self.label_3)
+
+        self.label_sum_earnings = QLabel(self.groupBox_2)
+        self.label_sum_earnings.setObjectName(u"label_sum_earnings")
+        self.label_sum_earnings.setFont(font1)
+
+        self.horizontalLayout_3.addWidget(self.label_sum_earnings)
+
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_3.addItem(self.horizontalSpacer_2)
+
+
+        self.verticalLayout_3.addLayout(self.horizontalLayout_3)
 
         self.splitter_3.addWidget(self.groupBox_2)
 
@@ -162,13 +184,17 @@ class Ui_spentInMonthEditor(object):
         self.groupBox_5 = QGroupBox(self.splitter)
         self.groupBox_5.setObjectName(u"groupBox_5")
         self.gridLayout_5 = QGridLayout(self.groupBox_5)
-        self.gridLayout_5.setSpacing(0)
         self.gridLayout_5.setObjectName(u"gridLayout_5")
-        self.gridLayout_5.setContentsMargins(3, 0, 3, 0)
         self.splitter_5 = QSplitter(self.groupBox_5)
         self.splitter_5.setObjectName(u"splitter_5")
         self.splitter_5.setOrientation(Qt.Horizontal)
-        self.tableWidget_sum = QTableWidget(self.splitter_5)
+        self.frame_5 = QFrame(self.splitter_5)
+        self.frame_5.setObjectName(u"frame_5")
+        self.frame_5.setFrameShape(QFrame.StyledPanel)
+        self.frame_5.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_2 = QVBoxLayout(self.frame_5)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.tableWidget_sum = QTableWidget(self.frame_5)
         if (self.tableWidget_sum.columnCount() < 3):
             self.tableWidget_sum.setColumnCount(3)
         __qtablewidgetitem12 = QTableWidgetItem()
@@ -178,7 +204,31 @@ class Ui_spentInMonthEditor(object):
         __qtablewidgetitem14 = QTableWidgetItem()
         self.tableWidget_sum.setHorizontalHeaderItem(2, __qtablewidgetitem14)
         self.tableWidget_sum.setObjectName(u"tableWidget_sum")
-        self.splitter_5.addWidget(self.tableWidget_sum)
+
+        self.verticalLayout_2.addWidget(self.tableWidget_sum)
+
+        self.horizontalLayout_2 = QHBoxLayout()
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_2.addItem(self.horizontalSpacer)
+
+        self.label_2 = QLabel(self.frame_5)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setFont(font1)
+
+        self.horizontalLayout_2.addWidget(self.label_2)
+
+        self.lalbel_sum_spent = QLabel(self.frame_5)
+        self.lalbel_sum_spent.setObjectName(u"lalbel_sum_spent")
+        self.lalbel_sum_spent.setFont(font1)
+
+        self.horizontalLayout_2.addWidget(self.lalbel_sum_spent)
+
+
+        self.verticalLayout_2.addLayout(self.horizontalLayout_2)
+
+        self.splitter_5.addWidget(self.frame_5)
         self.widget_chart = QWidget(self.splitter_5)
         self.widget_chart.setObjectName(u"widget_chart")
         self.splitter_5.addWidget(self.widget_chart)
@@ -222,6 +272,8 @@ class Ui_spentInMonthEditor(object):
         ___qtablewidgetitem5.setText(QCoreApplication.translate("spentInMonthEditor", u"Quanto", None));
         ___qtablewidgetitem6 = self.tableWidget_income.horizontalHeaderItem(2)
         ___qtablewidgetitem6.setText(QCoreApplication.translate("spentInMonthEditor", u"Dia", None));
+        self.label_3.setText(QCoreApplication.translate("spentInMonthEditor", u"Soma:", None))
+        self.label_sum_earnings.setText("")
         self.groupBox_3.setTitle(QCoreApplication.translate("spentInMonthEditor", u"Gatos", None))
         ___qtablewidgetitem7 = self.tableWidget_spent.horizontalHeaderItem(0)
         ___qtablewidgetitem7.setText(QCoreApplication.translate("spentInMonthEditor", u"Dia", None));
@@ -241,5 +293,7 @@ class Ui_spentInMonthEditor(object):
         ___qtablewidgetitem13.setText(QCoreApplication.translate("spentInMonthEditor", u"Gasto", None));
         ___qtablewidgetitem14 = self.tableWidget_sum.horizontalHeaderItem(2)
         ___qtablewidgetitem14.setText(QCoreApplication.translate("spentInMonthEditor", u"Meta teto m\u00eas", None));
+        self.label_2.setText(QCoreApplication.translate("spentInMonthEditor", u"Soma:", None))
+        self.lalbel_sum_spent.setText("")
     # retranslateUi
 
